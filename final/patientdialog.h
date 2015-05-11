@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QtCore>
 #include <QtGui>
+#include "patient.h"
 
 namespace Ui {
 class PatientDialog;
@@ -16,8 +17,9 @@ class PatientDialog : public QDialog
 public:
     explicit PatientDialog(QWidget *parent = 0);
     ~PatientDialog();
-    void setData(QList<QString> patients);
-    QString getData();
+    void populateData();
+    QList<Patient> patients;
+    Patient patient;
 
 
 private slots:
@@ -29,7 +31,6 @@ private slots:
 
 private:
     Ui::PatientDialog *ui;
-    QString patientName;
 };
 
 #endif // PATIENTDIALOG_H

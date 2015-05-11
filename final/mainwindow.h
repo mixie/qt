@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "patient.h"
 
 namespace Ui {
 class MainWindow;
@@ -13,7 +14,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void gotNewPicture(QString patient);
+    void gotNewPicture(Patient patient);
     ~MainWindow();
 
 private slots:

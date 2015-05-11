@@ -1,18 +1,19 @@
 #include "patientdialog.h"
 #include "ui_patientdialog.h"
-#include "mainwindow.h"
 #include <QtCore>
 #include <QtGui>
 #include <QString>
 #include <iostream>
+#include "filehelper.h"
 
 using namespace std;
+
 
 PatientDialog::PatientDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PatientDialog){
-    QString patientName;
-    patientName.fromStdString("");
+    Patient patient;
+    QList<Patient> patients;
     ui->setupUi(this);
 }
 
@@ -22,24 +23,14 @@ PatientDialog::~PatientDialog()
     delete ui;
 }
 
-void PatientDialog::setData(QList<QString> patients){
-    ui->choosePatientComboB->addItems(patients);
-}
-
-QString PatientDialog::getData(){
-    if(patientName.toStdString()==""){
-        return QString::fromStdString("");
-    }else{
-        if(ui->choosePatientRb->isChecked()){
-            return ui->choosePatientComboB->currentText();
-        }else{
-            if(ui->newPatientRB->isChecked()){
-                return ui->newPatientLineE->text();
-            }
-        }
+void PatientDialog::populateData(){
+    patients=FileHelper::getPatients();
+    cout << patients.size();
+    for(int i=0;i<patients.size();i++){
+         ui->choosePatientComboB->addItem(patients[i].name);
+         cout << patients[i].name.toStdString() <<" *";
     }
-    return QString::fromStdString("");
-}
+ }
 
 void PatientDialog::on_newPatientRB_clicked()
 {
@@ -55,9 +46,16 @@ void PatientDialog::on_choosePatientRb_clicked()
 
 void PatientDialog::on_buttonBox_accepted()
 {
-        patientName=getData();
-        cout << ui->choosePatientComboB->currentText().toStdString();
-        cout << ui->newPatientLineE->text().toStdString();
-        cout << patientName.toStdString()<< "za";
+    if(ui->choosePatientRb->isChecked()){
+        patient=patients[ui->choosePatientComboB->currentIndex()];
+
+    }
+    if(ui->newPatientRB->isChecked()){
+        QString patientname=ui->newPatientLineE->text();
+        QString filename=patientname.replace(' ',"_");
+        patient.filename=filename;
+        patient.name=patientname;
+    }
+
 
 }

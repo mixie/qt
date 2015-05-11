@@ -5,7 +5,10 @@
 #include <QtCore>
 #include <QtGui>
 #include <iostream>
-#include <patientdialog.h>
+#include <QPixmap>
+#include <QGraphicsScene>
+#include "patientdialog.h"
+#include <QGraphicsPixmapItem>
 
 
 using namespace std;
@@ -26,20 +29,16 @@ void MainWindow::on_newPictureB_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Otvoriť obrázok"), "C:\\", tr("Obrázky (*.png *.jpg *.bmp *.pbm *.pgm)"));
-    cout << fileName.toStdString()<< "\n";
     if(fileName!=""){
         PatientDialog pd;
         pd.setModal(true);
-        QList<QString> list;
-        list << "p1" << "p2" << "p3";
-        pd.setData(list);
+        pd.populateData();
         if(pd.exec()==QDialog::Accepted){
-            cout <<"tu"<< pd.getData().toStdString() <<"tu";
+            QPixmap file(fileName);
+               QGraphicsScene scene;
+               ui->graphicsView->setBackgroundBrush(&file);
+               ui->graphicsView->repaint();
         }
     }
 
-}
-
-void MainWindow::gotNewPicture(QString patient){
-    cout << patient.toStdString();
 }

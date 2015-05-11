@@ -14,10 +14,20 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    patientdialog.cpp
+    patientdialog.cpp \
+    filehelper.cpp \
+    patient.cpp
 
 HEADERS  += mainwindow.h \
-    patientdialog.h
+    patientdialog.h \
+    filehelper.h \
+    patient.h
 
 FORMS    += mainwindow.ui \
     patientdialog.ui
+
+DISTFILES += \
+    data/init.csv \
+    data/jozko_mrkvicka_1234.csv \
+    data/janko_dobry_157.csv \
+    data/kristinka_syslova_1578.csv
