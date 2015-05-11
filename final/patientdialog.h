@@ -17,6 +17,8 @@ public:
     explicit PatientDialog(QWidget *parent = 0);
     ~PatientDialog();
     void setData(QList<QString> patients);
+    QString getData();
+
 
 private slots:
     void on_newPatientRB_clicked();
@@ -27,6 +29,7 @@ private slots:
 
 private:
     Ui::PatientDialog *ui;
+    QString patientName;
 };
 
 #endif // PATIENTDIALOG_H

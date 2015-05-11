@@ -33,8 +33,13 @@ void MainWindow::on_newPictureB_clicked()
         QList<QString> list;
         list << "p1" << "p2" << "p3";
         pd.setData(list);
-        pd.exec();
+        if(pd.exec()==QDialog::Accepted){
+            cout <<"tu"<< pd.getData().toStdString() <<"tu";
+        }
     }
 
+}
 
+void MainWindow::gotNewPicture(QString patient){
+    cout << patient.toStdString();
 }
