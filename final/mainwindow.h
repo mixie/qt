@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "patient.h"
+#include <QGraphicsScene>
+#include "chooseciliascene.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    ChooseCiliaScene * scene;
 };
 
 #endif // MAINWINDOW_H

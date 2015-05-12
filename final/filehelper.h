@@ -11,6 +11,7 @@ public:
     ~FileHelper();
     static QList<Patient> getPatients();
     static QFile processPicture();
+    static void saveToPgm();
 };
 
 #endif // FILEHELPER_H

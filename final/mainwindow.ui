@@ -20,58 +20,52 @@
    <string>Rozoznávanie orientácie riasiniek</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="newPictureB">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>101</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Nový obrázok</string>
-    </property>
-   </widget>
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>30</y>
-      <width>501</width>
-      <height>361</height>
-     </rect>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOn</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOn</enum>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>486</width>
-       <height>346</height>
-      </rect>
-     </property>
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="geometry">
-       <rect>
-        <x>-10</x>
-        <y>0</y>
-        <width>5000</width>
-        <height>5000</height>
-       </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="newPictureB">
+      <property name="text">
+       <string>Nový obrázok</string>
       </property>
      </widget>
-    </widget>
-   </widget>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="graphicsView">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="backButton">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="horizontalSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="nextButton">
+         <property name="text">
+          <string>Next</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

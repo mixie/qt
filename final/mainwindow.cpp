@@ -6,9 +6,9 @@
 #include <QtGui>
 #include <iostream>
 #include <QPixmap>
-#include <QGraphicsScene>
 #include "patientdialog.h"
 #include <QGraphicsPixmapItem>
+#include "test.h"
 
 
 using namespace std;
@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -34,10 +35,16 @@ void MainWindow::on_newPictureB_clicked()
         pd.setModal(true);
         pd.populateData();
         if(pd.exec()==QDialog::Accepted){
-            QPixmap file(fileName);
-               QGraphicsScene scene;
-               ui->graphicsView->setBackgroundBrush(&file);
-               ui->graphicsView->repaint();
+            scene=new ChooseCiliaScene(this);
+            ui->graphicsView->setScene(scene);
+            QPixmap im(fileName);
+            QBrush rb(Qt::red);
+            QPen bl(Qt::blue);
+            scene->addPixmap(im);
+            if(im.save("nieco.jpg")){
+                cout << "podarilo sa";
+            }
+            cout <<"nepdoarilo sa;";
         }
     }
 

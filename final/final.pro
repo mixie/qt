@@ -16,15 +16,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     patientdialog.cpp \
     filehelper.cpp \
-    patient.cpp
+    patient.cpp \
+    test.cpp \
+    chooseciliascene.cpp
 
 HEADERS  += mainwindow.h \
     patientdialog.h \
     filehelper.h \
-    patient.h
+    patient.h \
+    test.h \
+    chooseciliascene.h
 
 FORMS    += mainwindow.ui \
-    patientdialog.ui
+    patientdialog.ui \
+    test.ui
 
 DISTFILES += \
     data/init.csv \
