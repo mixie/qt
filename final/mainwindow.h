@@ -30,6 +30,7 @@ private:
     ChooseCiliaScene * scene;
     PictureProcess * pic_proc;
     QImage initial_image;
+    QGraphicsPixmapItem * pix;
 };
 
 #endif // MAINWINDOW_H

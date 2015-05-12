@@ -15,7 +15,7 @@ PictureProcess::~PictureProcess()
 }
 
 QImage* PictureProcess::step1(int threshold){
-    Picture * p3=new Picture(p1->x,p1->y);
+    Picture * p3=new Picture(p1->x,p1->y,1);
     double thr=threshold/255.0;
     threshold1(p0,p3,thr);
     return p3->toQImage();
@@ -24,6 +24,6 @@ QImage* PictureProcess::step1(int threshold){
 void PictureProcess::step0(QImage * img){
     p1=new Picture(img,num_colors);
     p1->setRad(cilia_rad);
-    p0=new Picture(p1->x,p1->y);
+    p0=new Picture(p1->x,p1->y,1);
     preprocessPrefix(p1,p0);
 }

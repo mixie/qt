@@ -44,6 +44,7 @@ void MainWindow::on_newPictureB_clicked()
             scene->addPixmap(im);
             pic_proc=new PictureProcess(80,20,20);
             pic_proc->step0(&initial_image);
+          //  QImage * im=pic_proc->step1(position);
         }
     }
 
@@ -52,5 +53,8 @@ void MainWindow::on_newPictureB_clicked()
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
    QImage * im=pic_proc->step1(position);
-   scene->addPixmap(QPixmap::fromImage(*im));
+   scene->removeItem(pix);
+   pix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
+   pix->setOpacity(0.5);
+   scene->addItem(pix);
 }

@@ -85,12 +85,11 @@ bool Picture::inrange(int p_x, int p_y){
 }
 
 QImage * Picture::toQImage(){
-    QImage * img=new QImage(x,y,QImage::Format_ARGB32);
+    QImage * img=new QImage(x,y,QImage::Format_ARGB32_Premultiplied);
     for(int i=0;i<y;i++){
         for(int j=0;j<x;j++){
             int val=(int)(m[i][j]*255);
-            QColor col(val,val,val);
-            col.setAlpha(150);
+            QColor col(val,255,255);
             img->setPixel(j,i,col.rgb());
         }
     }
