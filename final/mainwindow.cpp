@@ -38,14 +38,19 @@ void MainWindow::on_newPictureB_clicked()
             scene=new ChooseCiliaScene(this);
             ui->graphicsView->setScene(scene);
             QPixmap im(fileName);
+            initial_image=im.toImage();
             QBrush rb(Qt::red);
             QPen bl(Qt::blue);
             scene->addPixmap(im);
-            if(im.save("nieco.jpg")){
-                cout << "podarilo sa";
-            }
-            cout <<"nepdoarilo sa;";
+            pic_proc=new PictureProcess(80,20,20);
+            pic_proc->step0(&initial_image);
         }
     }
 
+}
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+   QImage * im=pic_proc->step1(position);
+   scene->addPixmap(QPixmap::fromImage(*im));
 }

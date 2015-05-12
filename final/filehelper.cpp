@@ -36,3 +36,5 @@ QList<Patient>FileHelper::getPatients(){
     cout << patients.size()<< patients[0].filename.toStdString();
     return patients;
 }
+
+//void FileHelper::saveToPgm()

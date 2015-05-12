@@ -5,6 +5,7 @@
 #include "patient.h"
 #include <QGraphicsScene>
 #include "chooseciliascene.h"
+#include "pictureprocess.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,9 +23,13 @@ public:
 private slots:
     void on_newPictureB_clicked();
 
+    void on_horizontalSlider_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
     ChooseCiliaScene * scene;
+    PictureProcess * pic_proc;
+    QImage initial_image;
 };
 
 #endif // MAINWINDOW_H

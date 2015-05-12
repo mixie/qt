@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = final
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -18,14 +19,22 @@ SOURCES += main.cpp\
     filehelper.cpp \
     patient.cpp \
     test.cpp \
-    chooseciliascene.cpp
+    chooseciliascene.cpp \
+    ciliarecognition.cpp \
+    cilia.cpp \
+    picture.cpp \
+    pictureprocess.cpp
 
 HEADERS  += mainwindow.h \
     patientdialog.h \
     filehelper.h \
     patient.h \
     test.h \
-    chooseciliascene.h
+    chooseciliascene.h \
+    ciliarecognition.h \
+    cilia.h \
+    picture.h \
+    pictureprocess.h
 
 FORMS    += mainwindow.ui \
     patientdialog.ui \
