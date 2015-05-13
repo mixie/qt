@@ -25,12 +25,16 @@ private slots:
 
     void on_horizontalSlider_sliderMoved(int position);
 
+    void on_nextButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     ChooseCiliaScene * scene;
     PictureProcess * pic_proc;
     QImage initial_image;
     QGraphicsPixmapItem * pix;
+    int state;
+    int defaultSliderPos;
 };
 
 #endif // MAINWINDOW_H

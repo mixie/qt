@@ -18,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    state=0;
+    defaultSliderPos=200;
 }
 
 MainWindow::~MainWindow()
@@ -42,9 +43,9 @@ void MainWindow::on_newPictureB_clicked()
             QBrush rb(Qt::red);
             QPen bl(Qt::blue);
             scene->addPixmap(im);
-            pic_proc=new PictureProcess(80,20,20);
-            pic_proc->step0(&initial_image);
-          //  QImage * im=pic_proc->step1(position);
+            ui->nextButton->setEnabled(true);
+            ui->graphicsView->setEnabled(true);
+            state=1;
         }
     }
 
@@ -57,4 +58,26 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
    pix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
    pix->setOpacity(0.5);
    scene->addItem(pix);
+}
+
+void MainWindow::on_nextButton_clicked()
+{
+    if(state==1){
+        if(scene->samplesAddes()){
+            scene->removeSamples();
+            ui->horizontalSlider->setEnabled(true);
+            pic_proc=new PictureProcess(scene->getCiliaRadius(),scene->getPointX(),scene->getPointY());
+            pic_proc->step0(&initial_image);
+            QImage * im=pic_proc->step1(defaultSliderPos);
+            pix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
+            pix->setOpacity(0.5);
+            scene->addItem(pix);
+            state=2;
+        }
+    }
+    else if(state==2){
+        scene->removeItem(pix);
+        //pic_proc->step2();
+    }
+
 }

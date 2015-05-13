@@ -15,6 +15,11 @@ class ChooseCiliaScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit ChooseCiliaScene(QObject *parent = 0);
+    bool samplesAddes();
+    void removeSamples();
+    int getPointX();
+    int getPointY();
+    int getCiliaRadius();
 protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);
   //  virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
@@ -30,7 +35,6 @@ private:
     bool pointAdded,ciliaAdded;
     int pointSize;
     int startX,startY;
-
 };
 
 #endif // CHOOSECILIASCENE_H

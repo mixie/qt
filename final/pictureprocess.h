@@ -17,11 +17,17 @@ public:
     ~PictureProcess();
     void step0(QImage *);
     QImage* step1(int threshold);
+    vector<pair<int,int>> & step2();
     Picture * p1;
     Picture * p0;
+    Picture * p2;
     vector<vector<pair<int,int> > > cir;
     Cilia * cil;
     int cilia_rad;
+    int c_x,c_y;
+private:
+    vector<pair<int,int>> centres;
+    double threshh;
 };
 
 #endif // PICTUREPROCESS_H

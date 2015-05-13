@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <string.h>
 #include "cilia.h"
+#include <cstdio>
 
 
 
@@ -113,12 +114,12 @@ void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double
     }
     sort(to_sort.begin(),to_sort.end());
     printf("COUNTER\n");
-    //int counter=0;
-    for(unsigned int i=0;i<to_sort.size();i++){
-    //	counter++;
-        /**if(counter%10000==0){
-            printf("%d\n", counter);
-        }**/
+    int counter=0;
+    for(int i=0;i<to_sort.size();i++){
+            counter++;
+            if(counter%10==0){
+                printf("%d\n", counter);
+            }
         if(to_sort[i].first<threshold){
             if(inrange(to_sort[i].second.second,to_sort[i].second.first,sam,in1)){
                 Cilia act(to_sort[i].second.second,to_sort[i].second.first,in1);
@@ -200,7 +201,7 @@ rad- polomer riasinky
 threshold - po aku hranicu este bude povazovat body za mozny stred
 centres - vysledny vektor stredov riasiniek
 */
-void findCentres(Picture * in, Picture * out, int rad,double threshold, vector<pair<int,int>> & centres){
+void findCentres(Picture * in, int rad,double threshold, vector<pair<int,int>> & centres){
     threshold=threshold/255.0;
     vector <pair<double,pair<int,int > > >to_sort;
     for(int i=0;i<in->y;i++){
@@ -227,9 +228,6 @@ void findCentres(Picture * in, Picture * out, int rad,double threshold, vector<p
             centres.push_back(p);
         }
     }
-}
-for(unsigned int i=0;i<centres.size();i++){
-    draw_point(3,centres[i].second,centres[i].first,out,0.0);
 }
 }
 /**

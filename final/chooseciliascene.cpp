@@ -18,7 +18,6 @@ ChooseCiliaScene::ChooseCiliaScene(QObject *parent) :
     cilia->setFlag(QGraphicsItem::ItemIsMovable);
     ciliaAdded=false;
     cilia->setPen(rp);
-
 }
 
 
@@ -47,4 +46,23 @@ void ChooseCiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
         cilia->setRect(startX,startY,qAbs(mouseEvent->scenePos().x()-startX),qAbs(mouseEvent->scenePos().y()-startY));
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
     }
+}
+
+bool ChooseCiliaScene::samplesAddes(){
+    return ciliaAdded&&pointAdded;
+}
+
+void ChooseCiliaScene::removeSamples(){
+    this->removeItem(cilia);
+    this->removeItem(point);
+}
+
+int ChooseCiliaScene::getCiliaRadius(){
+    return cilia->rect().height()/2;
+}
+int ChooseCiliaScene::getPointX(){
+    return point->scenePos().x();
+}
+int ChooseCiliaScene::getPointY(){
+    return point->scenePos().y();
 }
