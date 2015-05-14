@@ -234,47 +234,40 @@ rad- polomer riasinky
 circles - vysledny vektor stredov riasiniek
 num_lines - koľko veľa rôzne otočených priamok bude skúšať
 **/
-void findOrientation(Picture * in, Picture * out, int rad, vector<pair<int,int> > & centres,int num_lines,vector <int> & orient){
+void findOrientation(Picture * in, int rad, vector<pair<int,int> > & centres,int num_lines,vector <int> & orient){
     rad=rad/4;
-    out->m.resize(out->y);
-    for(int i=0;i<out->y;i++){
-        for(int j=0;j<out->x;j++){
-            out->m[i].push_back(1.0);
-        }
-    }
-    for(auto &v:centres){
-        int x,y;
-        tie(y,x)=v;
-        double min=99999999999;
-        double m_x=0,m_y=0;
-        int min_k=0;
-        for(int k=0;k<num_lines;k++){
-            double sum=0;
-            pair<double,double> ab,ac;
-            ab.second=cos(((PI)/num_lines)*k);
-            ab.first=sin(((PI)/num_lines)*k);
-            for(int i=y-rad;i<y+rad;i++){
-                for(int j=x-rad;j<x+rad;j++){
-                    if(sqrt((x-j)*(x-j)+(y-i)*(y-i))<rad){
-                        ac.first=i-y; ac.second=j-x;
-                        if(in->inrange(j,i)){
-                            sum+=(in->m[i][j]*255)/(abs(-ab.second*ac.first+ab.first*ac.second)+1);
+        for(auto &v:centres){
+            int x,y;
+            tie(y,x)=v;
+            double min=99999999;
+            double m_x=0,m_y=0;
+            int min_k=0;
+            for(int k=0;k<num_lines;k++){
+                double sum=0;
+                pair<double,double> ab,ac;
+                ab.second=cos(((PI)/num_lines)*k);
+                ab.first=sin(((PI)/num_lines)*k);
+                for(int i=y-rad;i<y+rad;i++){
+                    for(int j=x-rad;j<x+rad;j++){
+                        if(sqrt((x-j)*(x-j)+(y-i)*(y-i))<rad){
+                            ac.first=i-y; ac.second=j-x;
+                            if(in->inrange(j,i)){
+                                sum+=(in->m[i][j]*255)/(abs(-ab.second*ac.first+ab.first*ac.second)+1);
+                            }
                         }
                     }
                 }
+                if(sum<min){
+                    min_k=k;
+                    min=sum;
+                    m_x=ab.first;
+                    m_y=ab.second;
+                }
             }
-            if(sum<min){
-                min_k=k;
-                min=sum;
-                m_x=ab.first;
-                m_y=ab.second;
-            }
+            orient.push_back(min_k);
+            printf("%d %d %d\n", min_k,x,y);
         }
-        orient.push_back(min_k);
-        for(int i=-25;i<25;i+=2){
-            draw_point(3,x+m_y*i,y+m_x*i,out,0.0);
-        }
-    }
+
 }
 
 void preprocessPrefix(Picture * in, Picture * out){

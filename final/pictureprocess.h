@@ -18,6 +18,7 @@ public:
     void step0(QImage *);
     QImage* step1(int threshold);
     vector<pair<int,int>> & step2();
+    vector <int> & step3(vector <pair<int,int>> & centres);
     Picture * p1;
     Picture * p0;
     Picture * p2;

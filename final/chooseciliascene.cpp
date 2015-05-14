@@ -31,16 +31,19 @@ void ChooseCiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEven
                pointAdded=true;
         }
     }
-    if(state==2){
+    if(state==3){
         QGraphicsItem * it=this->itemAt(mouseEvent->scenePos(), QTransform());
         if(it->type()==4){
             this->removeItem(it);
         }else{
             QBrush rb(Qt::red);
             QPen bl(Qt::blue);
-            this->addEllipse(mouseEvent->scenePos().x()-3,mouseEvent->scenePos().y()-3,7,7,bl,rb);
+            QGraphicsEllipseItem * it= new QGraphicsEllipseItem(0,0,7,7); //uvolnit vsetky tie pointre!!!
+            it->setBrush(rb);
+            it->setPen(bl);
+            it->setPos(mouseEvent->scenePos().x()-4,mouseEvent->scenePos().y()-4);
+            this->addItem(it);
         }
-
     }
     QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
 }
@@ -91,3 +94,5 @@ void ChooseCiliaScene::addEllipses(int cx,int cy){
     QGraphicsEllipseItem * el2=new QGraphicsEllipseItem(150,150,30,30);
     this->addItem(el1); this->addItem(el2);
 }
+
+

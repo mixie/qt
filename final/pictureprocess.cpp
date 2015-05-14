@@ -39,3 +39,9 @@ vector <pair<int,int>> & PictureProcess::step2(){
     return centres;
 }
 
+vector <int> & PictureProcess::step3(vector <pair<int,int>> & centres){
+    vector <int> orient;
+    findOrientation(p1,cilia_rad,centres,100,orient);
+    return orient;
+}
+

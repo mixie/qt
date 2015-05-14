@@ -14,7 +14,7 @@ void pear_selective(Cilia sam,Picture * in1,
                     Picture * in2, Picture * out, double threshold,vector<vector<pair<int,int> > > & cir);
 void findCentres(Picture * in, int rad,
                  double threshold, vector<pair<int,int>> & centres);
-void findOrientation(Picture * in, Picture * out, int rad,
+void findOrientation(Picture * in, int rad,
                vector<pair<int,int> > & centres,int num_lines,vector <int> & orient);
 int findMean(vector <int> & orient, int num_lines );
 

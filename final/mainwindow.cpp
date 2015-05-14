@@ -10,6 +10,7 @@
 #include <QGraphicsPixmapItem>
 #include "test.h"
 
+#define PI 3.14159265
 
 using namespace std;
 
@@ -75,7 +76,6 @@ void MainWindow::on_nextButton_clicked()
             scene->addItem(pix);
             state=2;
             scene->state=2;
-            scene->addEllipses(5,2);
         }
     }
     else if(state==2){
@@ -84,8 +84,44 @@ void MainWindow::on_nextButton_clicked()
         vector <pair<int,int>> centres=pic_proc->step2();
         QBrush rb(Qt::red);
         QPen bl(Qt::blue);
+       // vector<QGraphicsEllipseItem *> centres1;
         for(int i=0;i<centres.size();i++){
-            scene->addEllipse(centres[i].second,centres[i].first,7,7,bl,rb);
+            QGraphicsEllipseItem * it= new QGraphicsEllipseItem(0,0,7,7); //uvolnit vsetky tie pointre!!!
+            it->setBrush(rb);
+            it->setPen(bl);
+            it->setPos(centres[i].second,centres[i].first);
+            scene->addItem(it);
+        }
+        for(int i=0;i<centres.size();i++){
+            cout << centres[i].first << " " << centres[i].second << "\n";
+        }
+        cout << "**********\n";
+        state=3;
+        scene->state=3;
+    }else if(state==3){
+        vector <pair<int,int>> centres;
+        QList<QGraphicsItem *> items=scene->items();
+        for(int i=0;i<items.size();i++){
+            if(items.at(i)->type()==4){
+                centres.push_back(make_pair(items.at(i)->pos().y(),items.at(i)->pos().x()));
+            }
+        }
+        for(int i=0;i<centres.size();i++){
+            cout << centres[i].first << " " << centres[i].second << "\n";
+        }
+        vector<int> orient=pic_proc->step3(centres);
+        QBrush rb(Qt::red);
+        QPen bl(Qt::blue);
+        for(int i=0;i<orient.size();i++){
+            cout << "tu tu\n";
+            double vek_y=qSin(((PI)/100)*orient[i]);
+            double vek_x=qCos(((PI)/100)*orient[i]);
+            scene->addLine(centres[i].second-vek_x*20.,centres[i].first-vek_y*20.,
+                           centres[i].second+vek_x*20.,centres[i].first+vek_y*20.,bl);
+            for(int j=-25;j<25;j+=2){
+                      //  scene->addEllipse(centres[i].first+vek_x*j,centres[i].second+vek_y*j,
+                       //                  2,2,bl);
+                    }
         }
     }
 
