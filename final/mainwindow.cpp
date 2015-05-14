@@ -76,8 +76,14 @@ void MainWindow::on_nextButton_clicked()
         }
     }
     else if(state==2){
+        ui->horizontalSlider->setEnabled(false);
         scene->removeItem(pix);
-        //pic_proc->step2();
+        vector <pair<int,int>> centres=pic_proc->step2();
+        QBrush rb(Qt::red);
+        QPen bl(Qt::blue);
+        for(int i=0;i<centres.size();i++){
+            scene->addEllipse(centres[i].second,centres[i].first,7,7,bl,rb);
+        }
     }
 
 }

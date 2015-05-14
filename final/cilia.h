@@ -13,6 +13,7 @@ class Cilia{
         int ret_xy(int , int );
         double simple_repres(vector<double> & ,vector<vector<pair<int,int> > > & cir);
         double mean();
+        void changeCenter(int, int);
 };
 
 

@@ -8,7 +8,7 @@ PictureProcess::PictureProcess(int cilia_radius,int cil_x,int cil_y)
     cilia_rad=cilia_radius;
     c_x=cil_x;
     c_y=cil_y;
-    init_circles(cir,cilia_radius,255);
+    init_circles(cir,cilia_radius,10);
 }
 
 PictureProcess::~PictureProcess()
@@ -32,11 +32,10 @@ void PictureProcess::step0(QImage * img){
 
 vector <pair<int,int>> & PictureProcess::step2(){
     p2= new Picture(p1->x,p1->y,0);
-    pear_selective(Cilia(c_x,c_y,p1),p1,p0,p2,threshh,cir);
+    Cilia c(c_x,c_y,p1);
+    cout <<"cilia rad" << c.rad << "\n";
+    pear_selective(c,p1,p0,p2,threshh,cir);
     findCentres(p2,cilia_rad,200,centres);
-    for(int i=0;i<centres.size();i++){
-        cout << centres[i].first<< " " << centres[i].second << "\n";
-    }
     return centres;
 }
 

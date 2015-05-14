@@ -38,3 +38,8 @@ double Cilia::mean(){
         m=sum/((rad*2)*(rad*2));
     }return m;
 }
+
+void Cilia::changeCenter(int nx, int ny){
+    cen_x=nx;
+    cen_y=ny;
+}

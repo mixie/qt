@@ -35,15 +35,15 @@ void init_circles(vector<vector<pair<int,int> > >	& cir, int size,unsigned int r
     for(int i=0;i<size;i++){
         random_shuffle(cir[i].begin(),cir[i].end());
         if(cir[i].size()>res){
-            cir[i].resize(res);
+          //  cir[i].resize(res);
         }
-
     }
 }
 
-double simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir){
-    vector<double> simple_repres_a,simple_repres_b;
-    double mean_a=a.simple_repres(simple_repres_a, cir);
+double simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir,
+                      vector<double> & simple_repres_a,double mean_a){
+    vector<double> simple_repres_b;
+ //   double mean_a=a.simple_repres(simple_repres_a, cir);
     double mean_b=b.simple_repres(simple_repres_b, cir);
     assert(a.rad==b.rad);
     double sum=0; double d_a=0; double d_b=0;
@@ -93,7 +93,7 @@ void pear(Cilia sam,Picture * in,Picture * out,int simple,vector<vector<pair<int
             if(inrange(j,i,sam,in)){
                 Cilia act(j,i,in);
                 if(simple){
-                    out->m[i][j]=simple_pearson(sam,act,cir);
+                    //out->m[i][j]=simple_pearson(sam,act,cir);
                 }else{
                     out->m[i][j]=pearson(sam,act);
                 }
@@ -104,6 +104,8 @@ void pear(Cilia sam,Picture * in,Picture * out,int simple,vector<vector<pair<int
 }
 
 void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double threshold,vector<vector<pair<int,int> > > & cir){
+    vector<double> simple_repres_a;
+    double mean_a=sam.simple_repres(simple_repres_a,cir);
     vector <pair<double,pair<int,int > > >to_sort;
     for(int i=0;i<in2->y;i++){
         for(int j=0;j<in2->x;j++){
@@ -113,18 +115,11 @@ void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double
         }
     }
     sort(to_sort.begin(),to_sort.end());
-    printf("COUNTER\n");
-    int counter=0;
     for(int i=0;i<to_sort.size();i++){
-            counter++;
-            if(counter%10==0){
-                printf("%d\n", counter);
-            }
         if(to_sort[i].first<threshold){
             if(inrange(to_sort[i].second.second,to_sort[i].second.first,sam,in1)){
                 Cilia act(to_sort[i].second.second,to_sort[i].second.first,in1);
-                //printf("%d %d\n",to_sort[i].second.second,to_sort[i].second.first);
-                out->m[to_sort[i].second.first][to_sort[i].second.second]=simple_pearson(sam,act,cir);
+                out->m[to_sort[i].second.first][to_sort[i].second.second]=simple_pearson(sam,act,cir,simple_repres_a,mean_a);
             }
         }else{
             return;

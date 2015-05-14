@@ -6,10 +6,10 @@ using namespace std;
 ChooseCiliaScene::ChooseCiliaScene(QObject *parent) :
     QGraphicsScene(parent)
 {\
-    point=new QGraphicsEllipseItem(0,0,10,10);
-    point->setFlag(QGraphicsItem::ItemIsMovable);
     QBrush rb(Qt::red);
     QPen rp(Qt::red);
+    point=new QGraphicsEllipseItem(0,0,10,10);
+    point->setFlag(QGraphicsItem::ItemIsMovable);
     point->setBrush(rb);
     pointSize=8;
     point->setPen(rp);
@@ -58,11 +58,17 @@ void ChooseCiliaScene::removeSamples(){
 }
 
 int ChooseCiliaScene::getCiliaRadius(){
-    return cilia->rect().height()/2;
+    return (cilia->rect().height()+cilia->rect().width())/4;
 }
 int ChooseCiliaScene::getPointX(){
     return point->scenePos().x();
 }
 int ChooseCiliaScene::getPointY(){
     return point->scenePos().y();
+}
+
+void ChooseCiliaScene::addEllipses(int cx,int cy){
+    QGraphicsEllipseItem * el1=new QGraphicsEllipseItem(52,52,20,20);
+    QGraphicsEllipseItem * el2=new QGraphicsEllipseItem(150,150,30,30);
+    this->addItem(el1); this->addItem(el2);
 }
