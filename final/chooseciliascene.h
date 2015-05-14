@@ -8,6 +8,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QPixmap>
+#include <QGraphicsView>
 
 
 class ChooseCiliaScene : public QGraphicsScene
@@ -21,6 +22,7 @@ public:
     int getPointY();
     int getCiliaRadius();
     void addEllipses(int,int);
+    int state;
 protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);
   //  virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);

@@ -46,6 +46,7 @@ void MainWindow::on_newPictureB_clicked()
             ui->nextButton->setEnabled(true);
             ui->graphicsView->setEnabled(true);
             state=1;
+            scene->state=1;
         }
     }
 
@@ -73,6 +74,8 @@ void MainWindow::on_nextButton_clicked()
             pix->setOpacity(0.5);
             scene->addItem(pix);
             state=2;
+            scene->state=2;
+            scene->addEllipses(5,2);
         }
     }
     else if(state==2){
