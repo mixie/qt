@@ -27,6 +27,9 @@ private slots:
 
     void on_nextButton_clicked();
 
+
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     ChooseCiliaScene * scene;

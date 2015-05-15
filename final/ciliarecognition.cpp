@@ -41,9 +41,8 @@ void init_circles(vector<vector<pair<int,int> > >	& cir, int size,unsigned int r
 }
 
 double simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir,
-                      vector<double> & simple_repres_a,double mean_a){
-    vector<double> simple_repres_b;
- //   double mean_a=a.simple_repres(simple_repres_a, cir);
+                      vector<double> & simple_repres_a,vector<double> & simple_repres_b,double mean_a){
+    simple_repres_b.clear();
     double mean_b=b.simple_repres(simple_repres_b, cir);
     assert(a.rad==b.rad);
     double sum=0; double d_a=0; double d_b=0;
@@ -119,7 +118,9 @@ void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double
         if(to_sort[i].first<threshold){
             if(inrange(to_sort[i].second.second,to_sort[i].second.first,sam,in1)){
                 Cilia act(to_sort[i].second.second,to_sort[i].second.first,in1);
-                out->m[to_sort[i].second.first][to_sort[i].second.second]=simple_pearson(sam,act,cir,simple_repres_a,mean_a);
+                vector<double>  simple_repres_b;
+                out->m[to_sort[i].second.first][to_sort[i].second.second]
+                        =simple_pearson(sam,act,cir,simple_repres_a,simple_repres_b,mean_a);
             }
         }else{
             return;
@@ -235,7 +236,7 @@ circles - vysledny vektor stredov riasiniek
 num_lines - koľko veľa rôzne otočených priamok bude skúšať
 **/
 void findOrientation(Picture * in, int rad, vector<pair<int,int> > & centres,int num_lines,vector <int> & orient){
-    rad=rad/4;
+    rad=rad/5;
         for(auto &v:centres){
             int x,y;
             tie(y,x)=v;

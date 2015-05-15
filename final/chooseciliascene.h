@@ -21,7 +21,6 @@ public:
     int getPointX();
     int getPointY();
     int getCiliaRadius();
-    void addEllipses(int,int);
     int state;
 protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);

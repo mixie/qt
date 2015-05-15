@@ -89,10 +89,5 @@ int ChooseCiliaScene::getPointY(){
     return point->scenePos().y();
 }
 
-void ChooseCiliaScene::addEllipses(int cx,int cy){
-    QGraphicsEllipseItem * el1=new QGraphicsEllipseItem(52,52,20,20);
-    QGraphicsEllipseItem * el2=new QGraphicsEllipseItem(150,150,30,30);
-    this->addItem(el1); this->addItem(el2);
-}
 
 

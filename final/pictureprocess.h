@@ -7,6 +7,7 @@
 
 using namespace std;
 
+#define num_circles 10
 #define num_colors 255
 #define num_random_points 10
 
@@ -19,16 +20,17 @@ public:
     QImage* step1(int threshold);
     vector<pair<int,int>> & step2();
     vector <int> & step3(vector <pair<int,int>> & centres);
+private:
+    vector<pair<int,int>> centres;
+    double threshold;
     Picture * p1;
     Picture * p0;
     Picture * p2;
+    Picture * p3;
     vector<vector<pair<int,int> > > cir;
-    Cilia * cil;
     int cilia_rad;
     int c_x,c_y;
-private:
-    vector<pair<int,int>> centres;
-    double threshh;
+    void del(Picture * p);
 };
 
 #endif // PICTUREPROCESS_H

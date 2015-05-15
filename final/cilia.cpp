@@ -18,7 +18,8 @@ double Cilia::simple_repres(vector<double> & simple_repres,vector<vector<pair<in
     for(int i=0;i<rad;i++){
         for(auto p:cir[i]){
             int y, x;
-            tie(x,y) = p;
+            x = p.first;
+            y = p.second;
             simple_repres[i] += pic->m[cen_y+y][cen_x+x];
         }
         simple_repres[i]=simple_repres[i]/cir[i].size();

@@ -46,6 +46,8 @@ void MainWindow::on_newPictureB_clicked()
             scene->addPixmap(im);
             ui->nextButton->setEnabled(true);
             ui->graphicsView->setEnabled(true);
+            ui->graphicsView->fitInView(scene->itemsBoundingRect() ,Qt::KeepAspectRatio);
+           // scale=4;
             state=1;
             scene->state=1;
         }
@@ -64,10 +66,12 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
 
 void MainWindow::on_nextButton_clicked()
 {
+    //ui->graphicsView->scale(0.5,0.5);
     if(state==1){
         if(scene->samplesAddes()){
             scene->removeSamples();
             ui->horizontalSlider->setEnabled(true);
+            ui->verticalSlider->setEnabled(true);
             pic_proc=new PictureProcess(scene->getCiliaRadius(),scene->getPointX(),scene->getPointY());
             pic_proc->step0(&initial_image);
             QImage * im=pic_proc->step1(defaultSliderPos);
@@ -116,8 +120,10 @@ void MainWindow::on_nextButton_clicked()
             cout << "tu tu\n";
             double vek_y=qSin(((PI)/100)*orient[i]);
             double vek_x=qCos(((PI)/100)*orient[i]);
-            scene->addLine(centres[i].second-vek_x*20.,centres[i].first-vek_y*20.,
-                           centres[i].second+vek_x*20.,centres[i].first+vek_y*20.,bl);
+            QPen p(Qt::red);
+            p.setWidth(3);
+            scene->addLine(centres[i].second-vek_x*30.,centres[i].first-vek_y*30.,
+                           centres[i].second+vek_x*30.,centres[i].first+vek_y*30.,p);
             for(int j=-25;j<25;j+=2){
                       //  scene->addEllipse(centres[i].first+vek_x*j,centres[i].second+vek_y*j,
                        //                  2,2,bl);
@@ -125,4 +131,11 @@ void MainWindow::on_nextButton_clicked()
         }
     }
 
+}
+
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    ui->graphicsView->fitInView(scene->itemsBoundingRect() ,Qt::KeepAspectRatio);
+    ui->graphicsView->scale(value/4.,value/4.);
 }
