@@ -3,29 +3,31 @@
 
 using namespace std;
 
-ChooseCiliaScene::ChooseCiliaScene(QObject *parent) :
+CiliaScene::CiliaScene(QObject *parent) :
     QGraphicsScene(parent)
 {\
     QBrush rb(Qt::red);
     QPen rp(Qt::red);
+    rp.setWidth(3);
     point=new QGraphicsEllipseItem(0,0,10,10);
     point->setFlag(QGraphicsItem::ItemIsMovable);
     point->setBrush(rb);
     pointSize=8;
     point->setPen(rp);
+    point->setOpacity(0.5);
     pointAdded=false;
     cilia=new QGraphicsEllipseItem(0,0,pointSize,pointSize);
     cilia->setFlag(QGraphicsItem::ItemIsMovable);
     ciliaAdded=false;
     cilia->setPen(rp);
+    cilia->setOpacity(0.5);
     state=1;
 }
 
 
-void ChooseCiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
+void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
     if(state==1){
         point->setPos(mouseEvent->scenePos().x()-pointSize,mouseEvent->scenePos().y()-pointSize);
-        cout << "bod:"<< mouseEvent->scenePos().x()-pointSize << " " <<mouseEvent->scenePos().x()-pointSize << "\n";
         if(!pointAdded){
             this->addItem(point);
                pointAdded=true;
@@ -48,7 +50,7 @@ void ChooseCiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEven
     QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
 }
 
-void ChooseCiliaScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent){
+void CiliaScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent){
     if(state==1){
         startX=mouseEvent->scenePos().x();
         startY=mouseEvent->scenePos().y();
@@ -56,7 +58,7 @@ void ChooseCiliaScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent){
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
-void ChooseCiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
+void CiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
     if(state==1){
         if(!ciliaAdded){
             this->addItem(cilia);
@@ -70,24 +72,31 @@ void ChooseCiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
 
 }
 
-bool ChooseCiliaScene::samplesAddes(){
+bool CiliaScene::samplesAddes(){
     return ciliaAdded&&pointAdded;
 }
 
-void ChooseCiliaScene::removeSamples(){
+void CiliaScene::removeSamples(){
     this->removeItem(cilia);
     this->removeItem(point);
+    pointAdded=false;
+    ciliaAdded=false;
 }
 
-int ChooseCiliaScene::getCiliaRadius(){
+//TODO: v destruktore deletnut point a ciliu
+
+int CiliaScene::getCiliaRadius(){
     return (cilia->rect().height()+cilia->rect().width())/4;
 }
-int ChooseCiliaScene::getPointX(){
+int CiliaScene::getPointX(){
     return point->scenePos().x();
 }
-int ChooseCiliaScene::getPointY(){
+int CiliaScene::getPointY(){
     return point->scenePos().y();
 }
 
+void addCentres(){
+
+}
 
 

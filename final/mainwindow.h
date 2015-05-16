@@ -27,17 +27,35 @@ private slots:
 
     void on_nextButton_clicked();
 
-
     void on_verticalSlider_valueChanged(int value);
 
+    void on_backButton_clicked();
+
 private:
+//graphics
     Ui::MainWindow *ui;
-    ChooseCiliaScene * scene;
-    PictureProcess * pic_proc;
-    QImage initial_image;
-    QGraphicsPixmapItem * pix;
+    CiliaScene * scene;
+    QImage picture;
+    QGraphicsPixmapItem * picturePix;
     int state;
     int defaultSliderPos;
+    void setState1(QString);
+    void delState1();
+    void setState2();
+    void delState2();
+    void backState2();
+    void setState3();
+    void delState3();
+    void backState3();
+    void setState4();
+    void startAgain();
+    vector<QGraphicsEllipseItem *> centreEllipses;
+
+
+//imageProcessing
+    PictureProcess * pictureProcess;
+    vector <pair<int,int>> centres;
+
 };
 
 #endif // MAINWINDOW_H

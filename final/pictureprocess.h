@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define num_circles 10
+#define num_circles 5
 #define num_colors 255
 #define num_random_points 10
 

@@ -11,11 +11,11 @@
 #include <QGraphicsView>
 
 
-class ChooseCiliaScene : public QGraphicsScene
+class CiliaScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit ChooseCiliaScene(QObject *parent = 0);
+    explicit CiliaScene(QObject *parent = 0);
     bool samplesAddes();
     void removeSamples();
     int getPointX();
