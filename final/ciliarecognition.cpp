@@ -236,7 +236,8 @@ circles - vysledny vektor stredov riasiniek
 num_lines - koľko veľa rôzne otočených priamok bude skúšať
 **/
 void findOrientation(Picture * in, int rad, vector<pair<int,int> > & centres,int num_lines,vector <int> & orient){
-    rad=rad/5;
+    rad=rad/3;
+    orient.clear();
         for(auto &v:centres){
             int x,y;
             tie(y,x)=v;
@@ -319,24 +320,26 @@ int threshold1(Picture * in, Picture * out, double threshold){
     return c;
 }
 
-int findMean(vector <int> & orient, int num_lines ){
-    int min1=999999;
+double findDeviation(vector <int> & orient, int num_lines){
+    int min1=999999999;
+    int min_angle=0;
     for(int i=0;i<num_lines;i++){
-        int sum=999999999;
+        int sum=0;
         for(unsigned int j=0;j<orient.size();j++){
             sum+=min(abs(i-orient[j]),abs(i-(-(num_lines-orient[j]))));
         }
         if(sum<min1){
             min1=sum;
+            min_angle=i;
         }
     }
-    //printf("%d\n", min1);
     double odchylka=0;
     for(unsigned int i=0;i<orient.size();i++){
-        odchylka+=(orient[i]-min(abs(min1-orient[i]),abs(min1-(-(num_lines-orient[i])))))*
-            (orient[i]-min(abs(min1-orient[i]),abs(min1-(-(num_lines-orient[i])))));
+        odchylka+=(orient[i]-min(abs(min_angle-orient[i]),abs(min_angle-(-(num_lines-orient[i])))))*
+            (orient[i]-min(abs(min_angle-orient[i]),abs(min_angle-(-(num_lines-orient[i])))));
     }
-    odchylka=sqrt(odchylka)/orient.size();
+    odchylka=sqrt(odchylka)/(orient.size()-1);
+    printf("%f %d\n",odchylka,min_angle);
     return odchylka;
 }
 

@@ -52,10 +52,12 @@ void PatientDialog::on_buttonBox_accepted()
     }
     if(ui->newPatientRB->isChecked()){
         QString patientname=ui->newPatientLineE->text();
-        QString filename=patientname.replace(' ',"_");
-        patient.filename=filename;
+        QString filename(patientname);
+        patient.filename=filename.replace(" ","_");
         patient.name=patientname;
     }
+}
 
-
+bool PatientDialog::isNewPatient(){
+    return ui->newPatientRB->isChecked();
 }

@@ -9,7 +9,14 @@
 #include <QtGui>
 #include <QPixmap>
 #include <QGraphicsView>
+#include <vector>
 
+using namespace std;
+
+#define point_size 10
+#define PI 3.14159265
+#define opacity 0.8
+#define rotation_unit 10
 
 class CiliaScene : public QGraphicsScene
 {
@@ -21,6 +28,14 @@ public:
     int getPointX();
     int getPointY();
     int getCiliaRadius();
+    void addCentreEllipses(vector <pair<int,int>> &);
+    void removeCentreEllipsesFromScene();
+    void deleteCentreEllipses();
+    void getCentersFromScene(vector<pair<int,int>> & centres);
+    void drawOrientationLines(vector <int> & orient,vector<pair<int,int>> & centers,int num_lines);
+    void removeOrientLinesFromScene();
+    void deleteOrientLines();
+    void getOrientations(vector<int> & orient);
     int state;
 protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);
@@ -35,8 +50,11 @@ private:
     QGraphicsEllipseItem * point;
     QGraphicsEllipseItem * cilia;
     bool pointAdded,ciliaAdded;
-    int pointSize;
     int startX,startY;
+    QBrush * rb;
+    QPen * rp;
+    vector<QGraphicsEllipseItem *> centreEllipses;
+    vector<QGraphicsLineItem *> orientLines;
 };
 
 #endif // CHOOSECILIASCENE_H

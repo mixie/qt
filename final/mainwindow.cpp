@@ -9,8 +9,9 @@
 #include "patientdialog.h"
 #include <QGraphicsPixmapItem>
 #include "test.h"
-
-#define PI 3.14159265
+#include "filehelper.h"
+#include "picturedeviation.h"
+#include "finaldialog.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ void MainWindow::setState2(){
     ui->horizontalSlider->setEnabled(true);
     pictureProcess=new PictureProcess(scene->getCiliaRadius(),scene->getPointX(),scene->getPointY());
     pictureProcess->step0(&picture);
-    QImage * im=pictureProcess->step1(defaultSliderPos);
+    QImage * im=pictureProcess->step1(ui->horizontalSlider->value());
     picturePix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
     picturePix->setOpacity(0.5);
     scene->addItem(picturePix);
@@ -85,51 +86,46 @@ void MainWindow::delState2(){
 void MainWindow::setState3(){
     centres=pictureProcess->step2();
     for(int i=0;i<centres.size();i++){
-        QGraphicsEllipseItem * newEllipse=new QGraphicsEllipseItem(0,0,8,8);
-        QBrush rb(Qt::red);
-        QPen rp(Qt::red);
-        newEllipse->setOpacity(0.5);
-        newEllipse->setBrush(rb);
-        newEllipse->setPen(rp);
-        newEllipse->setPos(centres[i].second,centres[i].first);
-        scene->addItem(newEllipse);
-        centreEllipses.push_back(newEllipse);
+        cout << centres[i].first << " "<<centres[i].second << " 2\n";
     }
+    cout << centres.size() << "inti size\n";
+    scene->addCentreEllipses(centres);
     state=3;
     scene->state=3;
 }
 
+void MainWindow::delState4(){
+    scene->removeOrientLinesFromScene();
+    scene->deleteOrientLines();
+}
+
+void MainWindow::backState4(){
+    delState4();
+    scene->addCentreEllipses(centres);
+    state=3;
+    scene->state=3;
+    ui->nextButton->setText("Next");
+}
+
 void MainWindow::delState3(){
-    for(int i=0;i<centreEllipses.size();i++){
-        scene->removeItem(centreEllipses[i]);
-    }
+    scene->removeCentreEllipsesFromScene();
 }
 
 void MainWindow::backState3(){
-    delState3();
-    for(int i=0;i<centreEllipses.size();i++){
-        delete(centreEllipses[i]);
-    }
-    centreEllipses.clear();
+    scene->deleteCentreEllipses();
+    setState2();
 }
 
 void MainWindow::setState4(){
-    QList<QGraphicsItem *> items=scene->items();
-    for(int i=0;i<items.size();i++){
-        if(items.at(i)->type()==4){
-            centres.push_back(make_pair(items.at(i)->pos().y(),items.at(i)->pos().x()));
-        }
+    scene->getCentersFromScene(centres);
+    for(int i=0;i<centres.size();i++){
+        cout << centres[i].first << " "<<centres[i].second << " 1\n";
     }
-    vector<int> orient=pictureProcess->step3(centres);
-    for(int i=0;i<orient.size();i++){
-        double vek_y=qSin(((PI)/100)*orient[i]);
-        double vek_x=qCos(((PI)/100)*orient[i]);
-        QPen p(Qt::red);
-        p.setWidth(3);
-        scene->addLine(centres[i].second-vek_x*30.,centres[i].first-vek_y*30.,
-                       centres[i].second+vek_x*30.,centres[i].first+vek_y*30.,p);
-    }
+    pictureProcess->step3(centres,num_lines,orient);
+    scene->drawOrientationLines(orient,centres,num_lines);
     ui->nextButton->setText("Dokončiť");
+    state=4;
+    scene->state=4;
 }
 
 void MainWindow::on_newPictureB_clicked()
@@ -142,6 +138,11 @@ void MainWindow::on_newPictureB_clicked()
         pd.populateData();
         if(pd.exec()==QDialog::Accepted){
             setState1(filename);
+        }
+        patientFile=pd.patient.filename;
+        patientName=pd.patient.name;
+        if(pd.isNewPatient()){
+            FileHelper::createNewPatient(patientFile,patientName);
         }
     }
 }
@@ -170,7 +171,27 @@ void MainWindow::on_nextButton_clicked()
     }else if(state==3){
         setState4();
         delState3();
+    }else if(state==4){
+        finishPic();
     }
+}
+
+void MainWindow::finishPic(){
+    double dev=pictureProcess->step4(orient,num_lines);
+    int num_cilia=orient.size();
+    QList<PictureDeviation*> devs;
+    FileHelper::getPatientDeviations(patientFile,patientName,devs);
+    PictureDeviation *newDev=new PictureDeviation(dev,num_cilia);
+    devs.append(newDev);
+    int countOverall;
+    double overallDev=PictureDeviation::countNewDeviation(devs,countOverall);
+    FinalDialog fd(this,patientName,num_cilia,dev,overallDev);
+    fd.setModal(true);
+    if(fd.exec()==QDialog::Accepted){
+        FileHelper::addPatientDeviationToFile(*newDev,patientFile);
+    }
+    PictureDeviation pd1(overallDev,countOverall);
+    FileHelper::addPatientOverallDevToFIle(pd1 ,patientFile);
 }
 
 
@@ -188,5 +209,8 @@ void MainWindow::on_backButton_clicked()
     }
     if(state==3){
         backState3();
+    }
+    if(state==4){
+        backState4();
     }
 }

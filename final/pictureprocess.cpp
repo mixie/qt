@@ -42,10 +42,12 @@ vector <pair<int,int>> & PictureProcess::step2(){
     return centres;
 }
 
-vector <int> & PictureProcess::step3(vector <pair<int,int>> & centres){
-    vector <int> orient;
-    findOrientation(p1,cilia_rad,centres,100,orient);
-    return orient;
+void PictureProcess::step3(vector <pair<int,int>> & centres,int num_lines,vector<int> & orient){
+    findOrientation(p1,cilia_rad,centres,num_lines,orient);
+}
+
+double PictureProcess::step4(vector<int> orient,int num_lines){
+    return findDeviation(orient,num_lines);
 }
 
 void PictureProcess::del(Picture * p){

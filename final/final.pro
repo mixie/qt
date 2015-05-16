@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     ciliarecognition.cpp \
     cilia.cpp \
     picture.cpp \
-    pictureprocess.cpp
+    pictureprocess.cpp \
+    finaldialog.cpp \
+    picturedeviation.cpp
 
 HEADERS  += mainwindow.h \
     patientdialog.h \
@@ -34,11 +36,14 @@ HEADERS  += mainwindow.h \
     ciliarecognition.h \
     cilia.h \
     picture.h \
-    pictureprocess.h
+    pictureprocess.h \
+    finaldialog.h \
+    picturedeviation.h
 
 FORMS    += mainwindow.ui \
     patientdialog.ui \
-    test.ui
+    test.ui \
+    finaldialog.ui
 
 DISTFILES += \
     data/init.csv \

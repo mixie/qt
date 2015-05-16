@@ -7,6 +7,8 @@
 #include "chooseciliascene.h"
 #include "pictureprocess.h"
 
+#define num_lines 180
+
 namespace Ui {
 class MainWindow;
 }
@@ -48,14 +50,20 @@ private:
     void delState3();
     void backState3();
     void setState4();
+    void delState4();
+    void backState4();
     void startAgain();
-    vector<QGraphicsEllipseItem *> centreEllipses;
+    void finishPic();
 
 
 //imageProcessing
     PictureProcess * pictureProcess;
     vector <pair<int,int>> centres;
+    vector <int> orient;
 
+//patientInfo
+    QString patientName;
+    QString patientFile;
 };
 
 #endif // MAINWINDOW_H

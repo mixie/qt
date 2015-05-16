@@ -20,6 +20,7 @@ public:
     void populateData();
     QList<Patient> patients;
     Patient patient;
+    bool isNewPatient();
 
 
 private slots:

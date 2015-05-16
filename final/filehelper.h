@@ -1,6 +1,7 @@
 #ifndef FILEHELPER_H
 #define FILEHELPER_H
 #include "patient.h"
+#include "picturedeviation.h"
 #include <QFile>
 #include <QPixmap>
 
@@ -13,6 +14,10 @@ public:
     static QList<Patient> getPatients();
     static QFile processPicture();
     static void saveToPgm(QPixmap im);
+    static void getPatientDeviations(QString filename,QString patientName,QList<PictureDeviation*> &);
+    static void addPatientDeviationToFile(PictureDeviation pd,QString filename);
+    static void addPatientOverallDevToFIle(PictureDeviation pd,QString filename);
+    static void createNewPatient(QString patientName,QString filename);
 };
 
 #endif // FILEHELPER_H
