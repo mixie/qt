@@ -7,8 +7,8 @@
 #include <QDir>
 using namespace std;
 
-static QString initpath="../final/data/init.csv";
-static QString path="../final/data/";
+static QString initpath="data/init.csv";
+static QString path="data/";
 
 FileHelper::FileHelper()
 {

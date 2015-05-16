@@ -35,7 +35,7 @@ void init_circles(vector<vector<pair<int,int> > >	& cir, int size,unsigned int r
     for(int i=0;i<size;i++){
         random_shuffle(cir[i].begin(),cir[i].end());
         if(cir[i].size()>res){
-          //  cir[i].resize(res);
+           cir[i].resize(res);
         }
     }
 }

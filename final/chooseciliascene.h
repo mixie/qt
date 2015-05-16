@@ -15,7 +15,7 @@ using namespace std;
 
 #define point_size 10
 #define PI 3.14159265
-#define opacity 0.8
+#define opacity 0.4
 #define rotation_unit 10
 
 class CiliaScene : public QGraphicsScene
