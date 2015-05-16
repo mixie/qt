@@ -25,8 +25,7 @@ SOURCES += main.cpp\
     picture.cpp \
     pictureprocess.cpp \
     finaldialog.cpp \
-    picturedeviation.cpp \
-    aboutdialog.cpp
+    picturedeviation.cpp
 
 HEADERS  += mainwindow.h \
     patientdialog.h \
@@ -39,39 +38,15 @@ HEADERS  += mainwindow.h \
     picture.h \
     pictureprocess.h \
     finaldialog.h \
-    picturedeviation.h \
-    aboutdialog.h
+    picturedeviation.h
 
 FORMS    += mainwindow.ui \
     patientdialog.ui \
     test.ui \
-    finaldialog.ui \
-    aboutdialog.ui
+    finaldialog.ui
 
 DISTFILES += \
     data/init.csv \
     data/jozko_mrkvicka_1234.csv \
     data/janko_dobry_157.csv \
-    data/kristinka_syslova_1578.csv \
-    data/Mama_Naja_sum.csv \
-    data/Mama_Naja.csv \
-    data/Mama Naja.csv \
-    data/Maja_Maja_sum.csv \
-    data/Maja_Maja.csv \
-    data/Maja Maja.csv \
-    data/jozko_mrkvicka_1234_sum.csv \
-    data/Janko_Janko_sum.csv \
-    data/Janko_Janko.csv \
-    data/Ja_Ja_sum.csv \
-    data/Ja_Ja_Ja_sum.csv \
-    data/jajaja_sum.csv \
-    data/Ja_Ja_Ja_Ja_sum.csv \
-    data/jaja_jaja_sum.csv \
-    data/Ja_Ja_Ja_Ja.csv \
-    data/jaja_jaja.csv \
-    data/Ja_Ja_Ja.csv \
-    data/Ja Ja Ja.csv \
-    data/jajaja.csv \
-    data/Ja_Ja.csv \
-    data/JaJa.csv \
-    data/Aha Aha.csv
+    data/kristinka_syslova_1578.csv

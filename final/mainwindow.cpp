@@ -12,7 +12,6 @@
 #include "filehelper.h"
 #include "picturedeviation.h"
 #include "finaldialog.h"
-#include "aboutdialog.h"
 
 using namespace std;
 
@@ -41,7 +40,6 @@ void MainWindow::startAgain(){
 }
 
 void MainWindow::setState1(QString filename){
-    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši zakreslite kruh okolo jednej riasinky.");
     state=1;
     scene=new CiliaScene(this);
     scene->state=1;
@@ -60,7 +58,6 @@ void MainWindow::delState1(){
 }
 
 void MainWindow::setState2(){
-    ui->label_3->setText("Posuňte horizontálny posuvník tak, aby bolo vyznačených čo najviac stredov riasiniek a zároveň čo najmenej iných častí obrázkov.");
     state=2;
     scene->state=2;
     ui->horizontalSlider->setEnabled(true);
@@ -87,7 +84,6 @@ void MainWindow::delState2(){
 }
 
 void MainWindow::setState3(){
-    ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať.");
     centres=pictureProcess->step2();
     for(int i=0;i<centres.size();i++){
         cout << centres[i].first << " "<<centres[i].second << " 2\n";
@@ -121,8 +117,10 @@ void MainWindow::backState3(){
 }
 
 void MainWindow::setState4(){
-    ui->label_3->setText("Pravým klikom myši otočíte najbližšou riasinkou doprava. Ľavým klikom myši doľava.");
     scene->getCentersFromScene(centres);
+    for(int i=0;i<centres.size();i++){
+        cout << centres[i].first << " "<<centres[i].second << " 1\n";
+    }
     pictureProcess->step3(centres,num_lines,orient);
     scene->drawOrientationLines(orient,centres,num_lines);
     ui->nextButton->setText("Dokončiť");
@@ -130,7 +128,24 @@ void MainWindow::setState4(){
     scene->state=4;
 }
 
-
+void MainWindow::on_newPictureB_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Otvoriť obrázok"), "C:\\", tr("Obrázky (*.png *.jpg *.bmp *.pbm *.pgm)"));
+    if(filename!=""){
+        PatientDialog pd;
+        pd.setModal(true);
+        pd.populateData();
+        if(pd.exec()==QDialog::Accepted){
+            setState1(filename);
+        }
+        patientFile=pd.patient.filename;
+        patientName=pd.patient.name;
+        if(pd.isNewPatient()){
+            FileHelper::createNewPatient(patientFile,patientName);
+        }
+    }
+}
 
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
@@ -198,30 +213,4 @@ void MainWindow::on_backButton_clicked()
     if(state==4){
         backState4();
     }
-}
-
-void MainWindow::on_actionNov_obr_zok22_triggered()
-{
-    QString filename = QFileDialog::getOpenFileName(this,
-        tr("Otvoriť obrázok"), "C:\\", tr("Obrázky (*.png *.jpg *.bmp *.pbm *.pgm)"));
-    if(filename!=""){
-        PatientDialog pd;
-        pd.setModal(true);
-        pd.populateData();
-        if(pd.exec()==QDialog::Accepted){
-            setState1(filename);
-        }
-        patientFile=pd.patient.filename;
-        patientName=pd.patient.name;
-        if(pd.isNewPatient()){
-            FileHelper::createNewPatient(patientName,patientFile);
-        }
-        ui->nextButton->setText("Next");
-    }
-}
-
-void MainWindow::on_actionInfo_triggered()
-{
-    AboutDialog ad(this);
-    ad.exec();
 }

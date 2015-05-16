@@ -28,6 +28,7 @@ void PatientDialog::populateData(){
     cout << patients.size();
     for(int i=0;i<patients.size();i++){
          ui->choosePatientComboB->addItem(patients[i].name);
+         cout << patients[i].name.toStdString() <<" *";
     }
  }
 
@@ -53,7 +54,6 @@ void PatientDialog::on_buttonBox_accepted()
         QString patientname=ui->newPatientLineE->text();
         QString filename(patientname);
         patient.filename=filename.replace(" ","_");
-        cout << patient.filename.toStdString() << "\n";
         patient.name=patientname;
     }
 }

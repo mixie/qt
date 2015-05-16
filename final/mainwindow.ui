@@ -22,15 +22,9 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLabel" name="label_3">
+     <widget class="QPushButton" name="newPictureB">
       <property name="text">
-       <string>Vitajte v aplikácii na rozoznávanie riasiniek. Začnite vybratím obrázku s riasinkami v hornom menu Súbor.</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
+       <string>Nový obrázok</string>
       </property>
      </widget>
     </item>
@@ -178,31 +172,13 @@
      <height>27</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuNov_obr_zok">
+   <widget class="QMenu" name="menuObr_zok">
     <property name="title">
-     <string>Súbor</string>
+     <string>Nový obrázok</string>
     </property>
-    <addaction name="actionNov_obr_zok22"/>
    </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>Info</string>
-    </property>
-    <addaction name="actionInfo"/>
-   </widget>
-   <addaction name="menuNov_obr_zok"/>
-   <addaction name="menuAbout"/>
+   <addaction name="menuObr_zok"/>
   </widget>
-  <action name="actionNov_obr_zok22">
-   <property name="text">
-    <string>Nový obrázok</string>
-   </property>
-  </action>
-  <action name="actionInfo">
-   <property name="text">
-    <string>Info</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
