@@ -53,7 +53,6 @@ void PatientDialog::on_buttonBox_accepted()
         QString patientname=ui->newPatientLineE->text();
         QString filename(patientname);
         patient.filename=filename.replace(" ","_");
-        cout << patient.filename.toStdString() << "\n";
         patient.name=patientname;
     }
 }

@@ -41,7 +41,7 @@ void MainWindow::startAgain(){
 }
 
 void MainWindow::setState1(QString filename){
-    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši zakreslite kruh okolo jednej riasinky.");
+    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši od stredu po okraj riasinky nakreslite kruh.");
     state=1;
     scene=new CiliaScene(this);
     scene->state=1;
@@ -50,6 +50,7 @@ void MainWindow::setState1(QString filename){
     picture=im.toImage();
     scene->addPixmap(im);
     ui->nextButton->setEnabled(true);
+    ui->backButton->setEnabled(false);
     ui->graphicsView->setEnabled(true);
     ui->verticalSlider->setEnabled(true);
     ui->graphicsView->fitInView(scene->itemsBoundingRect() ,Qt::KeepAspectRatio);
@@ -162,6 +163,7 @@ void MainWindow::on_nextButton_clicked()
 }
 
 void MainWindow::finishPic(){
+    scene->getOrientations(orient);
     double dev=pictureProcess->step4(orient,num_lines);
     int num_cilia=orient.size();
     QList<PictureDeviation*> devs;

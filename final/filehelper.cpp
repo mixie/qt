@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <iostream>
 #include <QDir>
+#include <QString>
 using namespace std;
 
 static QString initpath="data/init.csv";
@@ -33,7 +34,6 @@ QList<Patient>FileHelper::getPatients(){
         patients.append(Patient(fields.takeFirst(),fields.takeLast()));
     }
     fr.close();
-    cout << patients.size()<< patients[0].filename.toStdString();
     return patients;
 }
 
@@ -64,7 +64,10 @@ void FileHelper::addPatientDeviationToFile(PictureDeviation pd,QString filename)
         QMessageBox::information(0, "error", "Nepodarilo sa otvoriť súbor s údajmi pacienta");
     }
     QString line=QString::number(pd.deviation)+","+QString::number(pd.count)+"\n";
-    fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
+    QTextStream str(&fw);
+    str <<line;
+    str.flush();
+ //   fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
     fw.close();
 }
 
@@ -74,7 +77,10 @@ void FileHelper::addPatientOverallDevToFIle(PictureDeviation pd,QString filename
         QMessageBox::information(0, "error", "Nepodarilo sa otvoriť súbor s údajmi pacienta");
     }
     QString line=QString::number(pd.deviation)+","+QString::number(pd.count)+"\n";
-    fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
+    QTextStream str(&fw);
+    str <<line;
+    str.flush();
+  //  fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
     fw.close();
 }
 
@@ -84,14 +90,20 @@ void FileHelper::createNewPatient(QString patientName,QString filename){
         QMessageBox::information(0, "error", "Nepodarilo sa vytvoriť súbor s údajmi pacienta");
     }
     QString line=patientName+"\n";
-    fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
+   // fw.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
+    QTextStream str(&fw);
+    str <<line;
+    str.flush();
     fw.close();
     QFile fa(initpath);
     if(!(fa.open(QIODevice::Append))){
         QMessageBox::information(0, "error", "Nepodarilo sa otvoriť inicializačný súbor");
     }
     line=filename+","+patientName+"\n";
-    fa.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
+    QTextStream str2(&fw);
+    str2 <<line;
+    str2.flush();
+   // fa.write(line.toStdString().data(), qstrlen(line.toStdString().data()));
     fa.close();
 }
 

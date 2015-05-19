@@ -74,6 +74,10 @@ void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
                 min_item->setRotation(min_item->rotation()+rotation_unit);
             }
         }
+        if(QGuiApplication::keyboardModifiers()==0x04000000){
+            this->removeItem(min_item);
+            delete(min_item);
+        }
     }
     QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
 }
@@ -92,8 +96,12 @@ void CiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
             this->addItem(cilia);
             ciliaAdded=true;
         }
-        if((qAbs(mouseEvent->scenePos().x()-startX)>1)&&(qAbs(mouseEvent->scenePos().y()-startY)>1)){
-            cilia->setRect(startX,startY,qAbs(mouseEvent->scenePos().x()-startX),qAbs(mouseEvent->scenePos().y()-startY));
+        int max=qMax(qAbs(mouseEvent->scenePos().x()-startX),qAbs(mouseEvent->scenePos().y()-startY));
+        if(max>1){
+            int diffx=qAbs(mouseEvent->scenePos().x()-startX);
+            int diffy=qAbs(mouseEvent->scenePos().y()-startY);
+            int z=qSqrt((diffx*diffx+diffy*diffy));
+            cilia->setRect(startX-z,startY-z,z*2,z*2);
         }
     }
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
@@ -114,7 +122,7 @@ void CiliaScene::removeSamples(){
 //TODO: v destruktore deletnut point a ciliu
 
 int CiliaScene::getCiliaRadius(){
-    return (cilia->rect().height()+cilia->rect().width())/4;
+    return qMax(cilia->rect().height(),cilia->rect().width())/2;
 }
 int CiliaScene::getPointX(){
     return point->scenePos().x();

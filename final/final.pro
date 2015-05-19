@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = final
 TEMPLATE = app
 
+INCLUDEPATH += /usr/include/opencv
+LIBS += -L/usr/lib/i386-linux-gnu -lopencv_core -lopencv_imgproc -lopencv_highgui
+
 CONFIG += c++11
 
 SOURCES += main.cpp\
