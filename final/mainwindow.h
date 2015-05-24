@@ -23,9 +23,6 @@ public:
     ~MainWindow();
 
 private slots:
-
-    void on_horizontalSlider_sliderMoved(int position);
-
     void on_nextButton_clicked();
 
     void on_verticalSlider_valueChanged(int value);
@@ -35,6 +32,8 @@ private slots:
     void on_actionNov_obr_zok22_triggered();
 
     void on_actionInfo_triggered();
+
+    void on_horizontalSlider_valueChanged(int value);
 
 private:
 //graphics

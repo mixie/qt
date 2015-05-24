@@ -105,7 +105,6 @@ void CiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
         }
     }
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
-
 }
 
 bool CiliaScene::samplesAddes(){
@@ -143,6 +142,7 @@ void CiliaScene::addCentreEllipses(vector <pair<int,int>> & centres){
         centreEllipses.push_back(newEllipse);
     }
 }
+
 void CiliaScene::removeCentreEllipsesFromScene(){
     for(int i=0;i<centreEllipses.size();i++){
         this->removeItem(centreEllipses[i]);

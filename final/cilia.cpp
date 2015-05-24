@@ -9,7 +9,7 @@ Cilia::Cilia(int x, int y,Picture * p){
 }
 
 
-int Cilia::ret_xy(int x, int y){
+double Cilia::ret_xy(int x, int y){
     return pic->m[cen_y-rad+y][cen_x-rad+x];
 }
 

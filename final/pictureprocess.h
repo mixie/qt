@@ -7,9 +7,8 @@
 
 using namespace std;
 
-#define num_circles 8
+#define num_circles 12
 #define num_colors 255
-#define num_random_points 10
 
 class PictureProcess
 {
@@ -18,9 +17,10 @@ public:
     ~PictureProcess();
     void step0(QImage *);
     QImage* step1(int threshold);
-    vector<pair<int,int>> & step2();
+    vector<pair<int,int>> & step2(int threshold2);
     void step3(vector <pair<int,int>> & centres,int num_lines,vector<int> &);
     double step4(vector<int> orient,int num_lines);
+    vector<pair<int,int>> & step2_1(int threshold2);
 
 private:
     vector<pair<int,int>> centres;

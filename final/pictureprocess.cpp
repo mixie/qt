@@ -33,12 +33,21 @@ void PictureProcess::step0(QImage * img){
     preprocessPrefix(p1,p0);
 }
 
-vector <pair<int,int>> & PictureProcess::step2(){
+vector <pair<int,int>> & PictureProcess::step2(int threshold2){
     del(p2);
     p2= new Picture(p1->x,p1->y,0);
     Cilia c(c_x,c_y,p1);
     pear_selective(c,p1,p0,p2,threshold,cir);
-    findCentres(p2,cilia_rad,200,centres);
+    findCentres(p2,cilia_rad,threshold2,threshold,centres);
+    return centres;
+}
+
+vector<pair<int,int>> & PictureProcess::step2_1(int threshold2){
+    double thr=threshold2;
+    cout << thr << "thr1\n";
+    cout.flush();
+    centres.clear();
+    findCentres(p2,cilia_rad,thr,threshold,centres);
     return centres;
 }
 

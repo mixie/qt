@@ -10,7 +10,7 @@ class Cilia{
         int rad;
         int cen_x,cen_y;
         Cilia(int, int, Picture * );
-        int ret_xy(int , int );
+        double  ret_xy(int , int );
         double simple_repres(vector<double> & ,vector<vector<pair<int,int> > > & cir);
         double mean();
         void changeCenter(int, int);

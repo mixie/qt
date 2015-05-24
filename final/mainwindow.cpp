@@ -13,6 +13,7 @@
 #include "picturedeviation.h"
 #include "finaldialog.h"
 #include "aboutdialog.h"
+#include <QMessageBox>
 
 using namespace std;
 
@@ -84,16 +85,13 @@ void MainWindow::backState2(){
 void MainWindow::delState2(){
     scene->removeItem(picturePix);
     delete(picturePix);
-    ui->horizontalSlider->setEnabled(false);
 }
 
 void MainWindow::setState3(){
+    ui->horizontalSlider->setEnabled(true);
+  //  ui->horizontalSlider->setValue(200);
     ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať.");
-    centres=pictureProcess->step2();
-    for(int i=0;i<centres.size();i++){
-        cout << centres[i].first << " "<<centres[i].second << " 2\n";
-    }
-    cout << centres.size() << "inti size\n";
+    centres=pictureProcess->step2(ui->horizontalSlider->value());
     scene->addCentreEllipses(centres);
     state=3;
     scene->state=3;
@@ -110,6 +108,7 @@ void MainWindow::backState4(){
     state=3;
     scene->state=3;
     ui->nextButton->setText("Next");
+    ui->horizontalSlider->setEnabled(true);
 }
 
 void MainWindow::delState3(){
@@ -122,7 +121,8 @@ void MainWindow::backState3(){
 }
 
 void MainWindow::setState4(){
-    ui->label_3->setText("Pravým klikom myši otočíte najbližšou riasinkou doprava. Ľavým klikom myši doľava.");
+    ui->horizontalSlider->setEnabled(false);
+    ui->label_3->setText("Pravým klikom myši otočíte najbližšou riasinkou doprava. Ľavým klikom myši doľava. CTRL + dvojklik vymaže otočenie.");
     scene->getCentersFromScene(centres);
     pictureProcess->step3(centres,num_lines,orient);
     scene->drawOrientationLines(orient,centres,num_lines);
@@ -132,23 +132,17 @@ void MainWindow::setState4(){
 }
 
 
-
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
-{
-   QImage * im=pictureProcess->step1(position);
-   scene->removeItem(picturePix);
-   delete(picturePix);
-   picturePix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
-   picturePix->setOpacity(0.5);
-   scene->addItem(picturePix);
-}
-
 void MainWindow::on_nextButton_clicked()
 {
     if(state==1){
         if(scene->samplesAddes()){
             delState1();
             setState2();
+        }else{
+            QMessageBox messageBox;
+            messageBox.setText("Nezadali ste stred a polomer riasinky.");
+            messageBox.setModal(true);
+            messageBox.exec();
         }
     }
     else if(state==2){
@@ -226,4 +220,23 @@ void MainWindow::on_actionInfo_triggered()
 {
     AboutDialog ad(this);
     ad.exec();
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    cout << "state:"<<state << "\n";
+    if(state==2){
+        QImage * im=pictureProcess->step1(value);
+        scene->removeItem(picturePix);
+        delete(picturePix);
+        picturePix=new QGraphicsPixmapItem(QPixmap::fromImage(*im));
+        picturePix->setOpacity(0.5);
+        scene->addItem(picturePix);
+    }else if(state==3){
+         centres.clear();
+         centres=pictureProcess->step2_1(value);
+         scene->removeCentreEllipsesFromScene();
+         scene->deleteCentreEllipses();
+         scene->addCentreEllipses(centres);
+    }
 }

@@ -130,7 +130,6 @@ void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double
 
 
 bool isNewCiliaCentre(int x1,int y1,int x2,int y2, int rad){
-//	printf("%d %d %d %d %f\n", x1,x2,y1,y2,sqrt(abs(x1-x2)*abs(x1-x2)+abs(y1-y2)*abs(y1-y2)));
     return sqrt(abs(x1-x2)*abs(x1-x2)+abs(y1-y2)*abs(y1-y2))>2*rad;
 }
 
@@ -197,12 +196,14 @@ rad- polomer riasinky
 threshold - po aku hranicu este bude povazovat body za mozny stred
 centres - vysledny vektor stredov riasiniek
 */
-void findCentres(Picture * in, int rad,double threshold, vector<pair<int,int>> & centres){
+void findCentres(Picture * in, int rad,double threshold, double threshold2, vector<pair<int,int>> & centres){
+    printf("%f\n",threshold);
     threshold=threshold/255.0;
+    printf("%f\n",threshold);
     vector <pair<double,pair<int,int > > >to_sort;
     for(int i=0;i<in->y;i++){
         for(int j=0;j<in->x;j++){
-            if(in->m[i][j]!=0.0){
+            if(in->m[i][j]>threshold2){
                 to_sort.push_back(make_pair(in->m[i][j],make_pair(i,j)));
             }
         }
@@ -215,16 +216,15 @@ void findCentres(Picture * in, int rad,double threshold, vector<pair<int,int>> &
                 centres[j].first,centres[j].second,rad)){
                 an=false;
             break;
+            }
+        }
+        if(an){
+            if(to_sort[i].first>threshold){
+                pair<int, int> p=findExactCentre(in,to_sort[i].second.second,to_sort[i].second.first,threshold);
+                centres.push_back(p);
+            }
         }
     }
-    if(an){
-        if(to_sort[i].first>threshold){
-                //printf("%d %d %f\n", to_sort[i].second.second,to_sort[i].second.first,to_sort[i].first);
-            pair<int, int> p=findExactCentre(in,to_sort[i].second.second,to_sort[i].second.first,threshold);
-            centres.push_back(p);
-        }
-    }
-}
 }
 /**
 Najde orientaciu riasinky, na vstupe potrebuje povodny obrazok a presny stred kazdej riasinky,
