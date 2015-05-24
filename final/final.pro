@@ -16,6 +16,8 @@ LIBS += -L/usr/lib/i386-linux-gnu -lopencv_core -lopencv_imgproc -lopencv_highgu
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS_RELEASE += -O2
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     patientdialog.cpp \

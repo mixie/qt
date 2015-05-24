@@ -17,7 +17,6 @@ using namespace std;
 
 
 #define PI 3.14159265
-#define num_colors 255
 
 vector<vector<pair<int,int> > > cir;
 
@@ -40,25 +39,24 @@ void init_circles(vector<vector<pair<int,int> > >	& cir, int size,unsigned int r
     }
 }
 
-double simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir,
-                      vector<double> & simple_repres_a,vector<double> & simple_repres_b,double mean_a){
+int simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir,
+                      vector<int> & simple_repres_a,vector<int> & simple_repres_b,int mean_a){
     simple_repres_b.clear();
-    double mean_b=b.simple_repres(simple_repres_b, cir);
-    assert(a.rad==b.rad);
-    double sum=0; double d_a=0; double d_b=0;
+    int mean_b=b.simple_repres(simple_repres_b, cir);
+    long long int sum=0;long long int d_a=0; long long int d_b=0;
     for(int i=0;i<a.rad;i++){
         sum+=(simple_repres_a[i]-mean_a)*(simple_repres_b[i]-mean_b);
         d_a+=(simple_repres_a[i]-mean_a)*(simple_repres_a[i]-mean_a);
         d_b+=(simple_repres_b[i]-mean_b)*(simple_repres_b[i]-mean_b);
     }
-    return sum/(sqrt(d_a)*sqrt(d_b));
+    return ((double)(sum)/(sqrt(d_a)*sqrt(d_b)))*255;
 }
 
 double pearson(Cilia & a, Cilia & b){
-    double mean_a=a.mean();
-    double mean_b=b.mean();
+    int mean_a=a.mean();
+    int mean_b=b.mean();
     assert(a.rad==b.rad);
-    double sum=0; double d_a=0; double d_b=0;
+    int sum=0; int d_a=0; int d_b=0;
     for(int i=0;i<2*a.rad;i++){
         for(int j=0;j<2*a.rad;j++){
             sum+=(a.ret_xy(j,i)-mean_a)*(b.ret_xy(j,i)-mean_b);
@@ -70,7 +68,6 @@ double pearson(Cilia & a, Cilia & b){
     return sum/(sqrt(d_a)*sqrt(d_b));
 }
 
-//TODO: treba tam tych 10?
 bool inrange(int x, int y, Cilia & c, Picture * p){
     if((x>p->x-c.rad)||(x<c.rad+10)||(y>p->y-c.rad)||(y<c.rad+10)){
         return false;
@@ -102,10 +99,10 @@ void pear(Cilia sam,Picture * in,Picture * out,int simple,vector<vector<pair<int
     }
 }
 
-void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double threshold,vector<vector<pair<int,int> > > & cir){
-    vector<double> simple_repres_a;
-    double mean_a=sam.simple_repres(simple_repres_a,cir);
-    vector <pair<double,pair<int,int > > >to_sort;
+void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, int threshold,vector<vector<pair<int,int> > > & cir){
+    vector<int> simple_repres_a;
+    int mean_a=sam.simple_repres(simple_repres_a,cir);
+    vector <pair<int,pair<int,int > > >to_sort;
     for(int i=0;i<in2->y;i++){
         for(int j=0;j<in2->x;j++){
             if(in2->m[i][j]<threshold){
@@ -118,7 +115,7 @@ void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, double
         if(to_sort[i].first<threshold){
             if(inrange(to_sort[i].second.second,to_sort[i].second.first,sam,in1)){
                 Cilia act(to_sort[i].second.second,to_sort[i].second.first,in1);
-                vector<double>  simple_repres_b;
+                vector<int>  simple_repres_b;
                 out->m[to_sort[i].second.first][to_sort[i].second.second]
                         =simple_pearson(sam,act,cir,simple_repres_a,simple_repres_b,mean_a);
             }
@@ -145,7 +142,7 @@ in - vstupnyobrazok
 x,y - suradnice zatial najdeneho stredu
 threshold - hranica, po ktoru povazuje body za mozne stredy
 */
-pair<int,int> findExactCentre(Picture * in, int x, int y, double threshold){
+pair<int,int> findExactCentre(Picture * in, int x, int y, int threshold){
     queue <pair<int,int> > q;
     unordered_set <pair<int,int>,pair_hash > visited;
     q.push(make_pair(x,y));
@@ -196,11 +193,8 @@ rad- polomer riasinky
 threshold - po aku hranicu este bude povazovat body za mozny stred
 centres - vysledny vektor stredov riasiniek
 */
-void findCentres(Picture * in, int rad,double threshold, double threshold2, vector<pair<int,int>> & centres){
-    printf("%f\n",threshold);
-    threshold=threshold/255.0;
-    printf("%f\n",threshold);
-    vector <pair<double,pair<int,int > > >to_sort;
+void findCentres(Picture * in, int rad,int threshold, int threshold2, vector<pair<int,int>> & centres){
+    vector <pair<int,pair<int,int > > >to_sort;
     for(int i=0;i<in->y;i++){
         for(int j=0;j<in->x;j++){
             if(in->m[i][j]>threshold2){
@@ -267,18 +261,16 @@ void findOrientation(Picture * in, int rad, vector<pair<int,int> > & centres,int
                 }
             }
             orient.push_back(min_k);
-            printf("%d %d %d\n", min_k,x,y);
         }
 
 }
 
 void preprocessPrefix(Picture * in, Picture * out){
-    vector <vector<double > > pr;
+    vector <vector<int > > pr;
     pr.resize(in->y+5);
     for(int i =0;i<in->y+5;i++){
         pr[i].resize(in->x+5);
     }
-    printf("%d %d\n", in->y,in->x);
     for(int i=0;i<in->y;i++){
         pr[i][0]=0;
     }
@@ -291,7 +283,7 @@ void preprocessPrefix(Picture * in, Picture * out){
         }
     }
     int rad=in->rad;
-    double max=0;
+    int max=0;
     for(int i=rad;i<in->y-rad;i++){
         for(int j=rad;j<in->x-rad;j++){
             out->m[i][j]=pr[i+1+rad][j+1+rad]-pr[i+1+rad][j+1-rad]-pr[i+1-rad][j+1+rad]+pr[i+1-rad][j+1-rad];
@@ -302,19 +294,19 @@ void preprocessPrefix(Picture * in, Picture * out){
     }
     for(int i=rad;i<in->y-rad;i++){
         for(int j=rad;j<in->x-rad;j++){
-            out->m[i][j]=out->m[i][j]/max;
+            out->m[i][j]=((double) (out->m[i][j])/max)*255;
         }
     }
 }
 
-int threshold1(Picture * in, Picture * out, double threshold){
+int threshold1(Picture * in, Picture * out, int threshold){
     int c=0;
     for(int i=0;i<in->y;i++){
         for(int j=0;j<in->x;j++){
             if(in->m[i][j]<threshold){
                 c++;
             }
-            out->m[i][j]=(int)(in->m[i][j]>threshold);
+            out->m[i][j]=in->m[i][j]>threshold;
         }
     }
     return c;

@@ -24,7 +24,7 @@ public:
 
 private:
     vector<pair<int,int>> centres;
-    double threshold;
+    int threshold;
     Picture * p1;
     Picture * p0;
     Picture * p2;

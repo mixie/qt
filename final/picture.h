@@ -10,11 +10,11 @@ class Picture{
     public:
         int x,y;
         int rad=-1;
-        vector<vector<double> > m;
+        vector<vector<int> > m;
         Picture();
         Picture(char * file,int num_colors);
         Picture(int s_x, int s_y);
-        Picture(int s_x,int s_y,double def);
+        Picture(int s_x,int s_y,int def);
         Picture(QImage *,int num_colors);
         void save(char *);
         bool inrange(int, int);

@@ -20,7 +20,7 @@ PictureProcess::~PictureProcess()
 QImage* PictureProcess::step1(int threshld){
     del(p3);
     p3=new Picture(p1->x,p1->y,1);
-    threshold=threshld/255.0;
+    threshold=threshld;
     threshold1(p0,p3,threshold);
     return p3->toQImage();
 }
@@ -29,7 +29,7 @@ void PictureProcess::step0(QImage * img){
     del(p1);del(p0);
     p1=new Picture(img,num_colors);
     p1->setRad(cilia_rad);
-    p0=new Picture(p1->x,p1->y,1);
+    p0=new Picture(p1->x,p1->y,num_colors);
     preprocessPrefix(p1,p0);
 }
 
@@ -43,9 +43,7 @@ vector <pair<int,int>> & PictureProcess::step2(int threshold2){
 }
 
 vector<pair<int,int>> & PictureProcess::step2_1(int threshold2){
-    double thr=threshold2;
-    cout << thr << "thr1\n";
-    cout.flush();
+    int thr=threshold2;
     centres.clear();
     findCentres(p2,cilia_rad,thr,threshold,centres);
     return centres;

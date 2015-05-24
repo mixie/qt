@@ -5,14 +5,14 @@
 
 class Cilia{
     public:
-        double m=-1.;
+        int m=-1.;
         Picture * pic;
         int rad;
         int cen_x,cen_y;
         Cilia(int, int, Picture * );
-        double  ret_xy(int , int );
-        double simple_repres(vector<double> & ,vector<vector<pair<int,int> > > & cir);
-        double mean();
+        int  ret_xy(int , int );
+        int simple_repres(vector<int> & ,vector<vector<pair<int,int> > > & cir);
+        int mean();
         void changeCenter(int, int);
 };
 
