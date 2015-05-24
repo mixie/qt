@@ -230,7 +230,7 @@ circles - vysledny vektor stredov riasiniek
 num_lines - koľko veľa rôzne otočených priamok bude skúšať
 **/
 void findOrientation(Picture * in, int rad, vector<pair<int,int> > & centres,int num_lines,vector <int> & orient){
-    rad=rad/3;
+    rad=rad/4;
     orient.clear();
         for(auto &v:centres){
             int x,y;
