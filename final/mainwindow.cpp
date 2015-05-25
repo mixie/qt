@@ -65,6 +65,7 @@ void MainWindow::setState2(){
     ui->label_3->setText("Posuňte horizontálny posuvník tak, aby bolo vyznačených čo najviac stredov riasiniek a zároveň čo najmenej iných častí obrázkov.");
     state=2;
     scene->state=2;
+    ui->verticalSlider->setValue(4);
     ui->horizontalSlider->setEnabled(true);
     pictureProcess=new PictureProcess(scene->getCiliaRadius(),scene->getPointX(),scene->getPointY());
     pictureProcess->step0(&picture);
@@ -88,8 +89,10 @@ void MainWindow::delState2(){
 }
 
 void MainWindow::setState3(){
+    state=-1;
     ui->horizontalSlider->setEnabled(true);
-  //  ui->horizontalSlider->setValue(200);
+    ui->horizontalSlider->setValue(180);
+    state=2;
     ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať.");
     centres=pictureProcess->step2(ui->horizontalSlider->value());
     scene->addCentreEllipses(centres);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>141</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>20</y>
+     <x>280</x>
+     <y>90</y>
      <width>81</width>
-     <height>241</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="orientation">
@@ -34,19 +34,19 @@
     <rect>
      <x>50</x>
      <y>20</y>
-     <width>121</width>
-     <height>17</height>
+     <width>241</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>TODO: Cool Meno</string>
+    <string>CiDi - rozoznávanie orientácie riasiniek</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>50</y>
+     <y>60</y>
      <width>191</width>
      <height>21</height>
     </rect>
@@ -59,13 +59,13 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>80</y>
+     <y>90</y>
      <width>191</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>verzia 0.0</string>
+    <string>verzia 0.1.0</string>
    </property>
   </widget>
  </widget>
