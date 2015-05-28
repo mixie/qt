@@ -110,7 +110,7 @@ void MainWindow::backState4(){
     scene->addCentreEllipses(centres);
     state=3;
     scene->state=3;
-    ui->nextButton->setText("Next");
+    ui->nextButton->setText("Ďalej");
     ui->horizontalSlider->setEnabled(true);
 }
 
