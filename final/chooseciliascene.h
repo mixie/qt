@@ -37,6 +37,7 @@ public:
     void deleteOrientLines();
     void getOrientations(vector<int> & orient);
     int state;
+    void returnSamples();
 protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);
   //  virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);

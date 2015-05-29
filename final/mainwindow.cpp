@@ -38,11 +38,17 @@ MainWindow::~MainWindow()
 void MainWindow::startAgain(){
     if(scene){
         delete(scene);
+        scene=0;
+    }
+    if(pictureProcess){
+        delete(pictureProcess);
+        pictureProcess=0;
     }
 }
 
 void MainWindow::setState1(QString filename){
-    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši od stredu po okraj riasinky nakreslite kruh.");
+    startAgain();
+    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši a Ctrl od stredu po okraj riasinky nakreslite kruh.");
     state=1;
     scene=new CiliaScene(this);
     scene->state=1;
@@ -79,7 +85,12 @@ void MainWindow::setState2(){
 void MainWindow::backState2(){
     state=1;
     scene->state=1;
-    delete(pictureProcess);
+    ui->label_3->setText("Dvojklikom presne kliknite do stredu jednej riasinky. Stlačením a držaním tlačidla myši a Ctrl od stredu po okraj riasinky nakreslite kruh.");
+    if(pictureProcess){
+        delete(pictureProcess);
+        pictureProcess=0;
+    }
+    scene->returnSamples();
     delState2();
 }
 
@@ -215,7 +226,7 @@ void MainWindow::on_actionNov_obr_zok22_triggered()
         if(pd.isNewPatient()){
             FileHelper::createNewPatient(patientName,patientFile);
         }
-        ui->nextButton->setText("Next");
+        ui->nextButton->setText("Ďalej");
     }
 }
 
@@ -227,7 +238,6 @@ void MainWindow::on_actionInfo_triggered()
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    cout << "state:"<<state << "\n";
     if(state==2){
         QImage * im=pictureProcess->step1(value);
         scene->removeItem(picturePix);

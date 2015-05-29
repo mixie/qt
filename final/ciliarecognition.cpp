@@ -20,9 +20,6 @@ using namespace std;
 
 vector<vector<pair<int,int> > > cir;
 
-/**
-Funkcia, ktora vytvori tie "chlieviky" pre rozne vzdialenosti od stredu kruhu
-*/
 void init_circles(vector<vector<pair<int,int> > >	& cir, int size,unsigned int res){
     cir.resize(size*2);
     for(int i=-size;i<size;i++){
@@ -52,51 +49,12 @@ int simple_pearson(Cilia & a, Cilia & b,vector<vector<pair<int,int> > > & cir,
     return ((double)(sum)/(sqrt(d_a)*sqrt(d_b)))*255;
 }
 
-double pearson(Cilia & a, Cilia & b){
-    int mean_a=a.mean();
-    int mean_b=b.mean();
-    assert(a.rad==b.rad);
-    int sum=0; int d_a=0; int d_b=0;
-    for(int i=0;i<2*a.rad;i++){
-        for(int j=0;j<2*a.rad;j++){
-            sum+=(a.ret_xy(j,i)-mean_a)*(b.ret_xy(j,i)-mean_b);
-            d_a+=(a.ret_xy(j,i)-mean_a)*(a.ret_xy(j,i)-mean_a);
-            d_b+=(b.ret_xy(j,i)-mean_b)*(b.ret_xy(j,i)-mean_b);
-        }
-    }
-
-    return sum/(sqrt(d_a)*sqrt(d_b));
-}
 
 bool inrange(int x, int y, Cilia & c, Picture * p){
     if((x>p->x-c.rad)||(x<c.rad+10)||(y>p->y-c.rad)||(y<c.rad+10)){
         return false;
     }
     return true;
-}
-
-
-/**
-Funkcia, ktora pre jednu sample riasinku skusi najst ine riasinky na obrazku
-sam - sample riasinka
-in,out - vstupny, vystupny obrazok
-int simple - (0/1) 0 - rata korelaciu pre celu riasinku, 1 - rata korelaciu sum bodov podla vzdialenosti od stredu
-*/
-void pear(Cilia sam,Picture * in,Picture * out,int simple,vector<vector<pair<int,int> > > & cir){
-    for(int i=0;i<in->y;i++){
-        printf("%d\n", i);
-        for(int j=0;j<in->x;j++){
-            if(inrange(j,i,sam,in)){
-                Cilia act(j,i,in);
-                if(simple){
-                    //out->m[i][j]=simple_pearson(sam,act,cir);
-                }else{
-                    out->m[i][j]=pearson(sam,act);
-                }
-            }else
-            out->m[i][j]=0;
-        }
-    }
 }
 
 void pear_selective(Cilia sam,Picture * in1,Picture * in2, Picture * out, int threshold,vector<vector<pair<int,int> > > & cir){
@@ -135,13 +93,8 @@ struct pair_hash {
         return v.first*31+v.second;
     }
 };
-/**
-Ak je najdeny priblizny stred riasinky, tato funkcia spusti BFSko
-na jeho okolie, ktore je dostatocne biele (t.j. dostatocne stred) a najde priemer
-in - vstupnyobrazok
-x,y - suradnice zatial najdeneho stredu
-threshold - hranica, po ktoru povazuje body za mozne stredy
-*/
+
+
 pair<int,int> findExactCentre(Picture * in, int x, int y, int threshold){
     queue <pair<int,int> > q;
     unordered_set <pair<int,int>,pair_hash > visited;
@@ -169,9 +122,7 @@ pair<int,int> findExactCentre(Picture * in, int x, int y, int threshold){
     return make_pair(sumY/count,sumX/count);
 }
 
-/**
-Nakresli trosku vacsi bod do obrazku
-*/
+
 void draw_point(int rad,int x, int y, Picture * p,double color){
     for(int i=y-rad;i<y+rad;i++){
         for(int j=x-rad;j<x+rad;j++){
@@ -183,16 +134,6 @@ void draw_point(int rad,int x, int y, Picture * p,double color){
 }
 
 
-
-/**
- Hlada centra riasiniek z predspracovaneho orazku, zoradi si body podla "belosti" a potom hlada take, co su dostatocne
- daleko od seba, aby mohli byt stredy a tie este potom vylepsuje cez findExactCircles
- in - vstupny obrazok, ktory bol ako vystup funkcie pear
-out -vystupny obrazok, kdesu iba nakreslene bodky na mieste riasiniek
-rad- polomer riasinky
-threshold - po aku hranicu este bude povazovat body za mozny stred
-centres - vysledny vektor stredov riasiniek
-*/
 void findCentres(Picture * in, int rad,int threshold, int threshold2, vector<pair<int,int>> & centres){
     vector <pair<int,pair<int,int > > >to_sort;
     for(int i=0;i<in->y;i++){
@@ -306,7 +247,7 @@ int threshold1(Picture * in, Picture * out, int threshold){
 }
 
 int distance(int mean,int orientation){
- return min(abs(mean-orientation),180-abs(mean-orientation));
+    return min(qAbs(mean-orientation),180-qAbs(mean-orientation));
 }
 
 double findDeviation(vector <int> & orient, int num_lines){
@@ -315,7 +256,7 @@ double findDeviation(vector <int> & orient, int num_lines){
     for(int i=0;i<num_lines;i++){
         int sum=0;
         for(unsigned int j=0;j<orient.size();j++){
-            sum+=distance(i,orient[i]);
+            sum+=distance(i,orient[j]);
         }
         if(sum<min1){
             min1=sum;
@@ -326,7 +267,7 @@ double findDeviation(vector <int> & orient, int num_lines){
     for(unsigned int i=0;i<orient.size();i++){
         odchylka+=distance(min_angle,orient[i])*distance(min_angle,orient[i]);
     }
-    odchylka=sqrt(odchylka)/(orient.size()-1);
+    odchylka=sqrt(odchylka/(orient.size()-1));
     return odchylka;
 }
 

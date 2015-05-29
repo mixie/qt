@@ -9,7 +9,6 @@ using namespace std;
 void preprocessPrefix(Picture * in, Picture * out);
 int threshold1(Picture * in, Picture * out, int threshold);
 void init_circles(vector<vector<pair<int,int> > > & cir, int size,unsigned int res);
-void pear(Cilia sam,Picture * in,Picture * out,int simple,vector<vector<pair<int,int> > > & cir);
 void pear_selective(Cilia sam,Picture * in1,
                     Picture * in2, Picture * out, int threshold,vector<vector<pair<int,int> > > & cir);
 void findCentres(Picture * in, int rad,

@@ -76,7 +76,6 @@ void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
         }
         if(QGuiApplication::keyboardModifiers()==0x04000000){
             this->removeItem(min_item);
-            delete(min_item);
         }
     }
     QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
@@ -84,24 +83,28 @@ void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
 
 void CiliaScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent){
     if(state==1){
-        startX=mouseEvent->scenePos().x();
-        startY=mouseEvent->scenePos().y();
+        if(QGuiApplication::keyboardModifiers()==0x04000000){
+            startX=mouseEvent->scenePos().x();
+            startY=mouseEvent->scenePos().y();
+        }
     }
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
 void CiliaScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent){
     if(state==1){
-        if(!ciliaAdded){
-            this->addItem(cilia);
-            ciliaAdded=true;
-        }
-        int max=qMax(qAbs(mouseEvent->scenePos().x()-startX),qAbs(mouseEvent->scenePos().y()-startY));
-        if(max>1){
-            int diffx=qAbs(mouseEvent->scenePos().x()-startX);
-            int diffy=qAbs(mouseEvent->scenePos().y()-startY);
-            int z=qSqrt((diffx*diffx+diffy*diffy));
-            cilia->setRect(startX-z,startY-z,z*2,z*2);
+        if(QGuiApplication::keyboardModifiers()==0x04000000){
+            if(!ciliaAdded){
+                this->addItem(cilia);
+                ciliaAdded=true;
+            }
+            int max=qMax(qAbs(mouseEvent->scenePos().x()-startX),qAbs(mouseEvent->scenePos().y()-startY));
+            if(max>1){
+                int diffx=qAbs(mouseEvent->scenePos().x()-startX);
+                int diffy=qAbs(mouseEvent->scenePos().y()-startY);
+                int z=qSqrt((diffx*diffx+diffy*diffy));
+                cilia->setRect(startX-z,startY-z,z*2,z*2);
+            }
         }
     }
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
@@ -116,6 +119,13 @@ void CiliaScene::removeSamples(){
     this->removeItem(point);
     pointAdded=false;
     ciliaAdded=false;
+}
+
+void CiliaScene::returnSamples(){
+    this->addItem(cilia);
+    this->addItem(point);
+    pointAdded=true;
+    ciliaAdded=true;
 }
 
 //TODO: v destruktore deletnut point a ciliu
