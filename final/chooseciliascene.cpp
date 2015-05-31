@@ -35,6 +35,13 @@ void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
         QGraphicsItem * it=this->itemAt(mouseEvent->scenePos(), QTransform());
         if(it->type()==4){
             this->removeItem(it);
+            delete(it);
+            for(int i=0;i<centreEllipses.size();i++){
+                if(centreEllipses[i]==it){
+                    centreEllipses.erase(centreEllipses.begin()+i);
+                    break;
+                }
+            }
         }else{
             QGraphicsEllipseItem * it= new QGraphicsEllipseItem(0,0,point_size,point_size);
             it->setBrush(*rb);
@@ -76,6 +83,13 @@ void CiliaScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent){
         }
         if(QGuiApplication::keyboardModifiers()==0x04000000){
             this->removeItem(min_item);
+            delete(min_item);
+            for(int i=0;i<orientLines.size();i++){
+                if(orientLines[i]==min_item){
+                    orientLines.erase(orientLines.begin()+i);
+                    break;
+                }
+            }
         }
     }
     QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
@@ -141,6 +155,7 @@ int CiliaScene::getPointY(){
 }
 
 void CiliaScene::addCentreEllipses(vector <pair<int,int>> & centres){
+    centreEllipses.clear();
     for(int i=0;i<centres.size();i++){
         QGraphicsEllipseItem * newEllipse=new QGraphicsEllipseItem(0,0,point_size,point_size);
         newEllipse->setOpacity(opacity);
@@ -177,6 +192,7 @@ void CiliaScene::getCentersFromScene(vector<pair<int,int>> & centres){
 }
 
 void CiliaScene::drawOrientationLines(vector<int> &orient,vector<pair<int,int>> & centres,int num_lines){
+    orientLines.clear();
     for(int i=0;i<orient.size();i++){
         QGraphicsLineItem * line=new QGraphicsLineItem(centres[i].second-getCiliaRadius(),centres[i].first,
                                                        centres[i].second+getCiliaRadius(),centres[i].first);
