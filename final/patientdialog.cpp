@@ -25,7 +25,6 @@ PatientDialog::~PatientDialog()
 
 void PatientDialog::populateData(){
     patients=FileHelper::getPatients();
-    cout << patients.size();
     for(int i=0;i<patients.size();i++){
          ui->choosePatientComboB->addItem(patients[i].name);
     }

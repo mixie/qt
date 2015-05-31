@@ -104,7 +104,7 @@ void MainWindow::setState3(){
     ui->horizontalSlider->setEnabled(true);
     ui->horizontalSlider->setValue(180);
     state=2;
-    ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať.");
+    ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať. Horizontálnym posuvníkom regulujete celový počet riasiniek na obrázku.");
     centres=pictureProcess->step2(ui->horizontalSlider->value());
     scene->addCentreEllipses(centres);
     state=3;
@@ -117,6 +117,7 @@ void MainWindow::delState4(){
 }
 
 void MainWindow::backState4(){
+    ui->label_3->setText("Dvojklikom myši môžete stredy riasiniek pridávať a odoberať. Držaním myši môžete stredy posúvať. Horizontálnym posuvníkom regulujete celový počet riasiniek na obrázku.");
     delState4();
     scene->addCentreEllipses(centres);
     state=3;
