@@ -9,6 +9,7 @@ using namespace std;
 
 #define num_circles 12
 #define num_colors 255
+#define column_size 5
 
 class PictureProcess
 {
@@ -19,8 +20,9 @@ public:
     QImage* step1(int threshold);
     vector<pair<int,int>> & step2(int threshold2);
     void step3(vector <pair<int,int>> & centres,int num_lines,vector<int> &);
-    double step4(vector<int> orient,int num_lines);
+    double step4(vector<int> orient,int num_lines,vector<int> & columns);
     vector<pair<int,int>> & step2_1(int threshold2);
+    vector<int> & step5(vector<int> orient);
 
 private:
     vector<pair<int,int>> centres;

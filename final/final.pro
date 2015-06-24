@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = final
 TEMPLATE = app
@@ -79,4 +79,5 @@ DISTFILES += \
     data/jajaja.csv \
     data/Ja_Ja.csv \
     data/JaJa.csv \
-    data/Aha Aha.csv
+    data/Aha Aha.csv \
+    ../build-final-Desktop_Qt_5_4_1_GCC_32bit-Release/data/jozko_mrkvicka_1234col.csv

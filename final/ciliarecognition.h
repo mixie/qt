@@ -15,7 +15,7 @@ void findCentres(Picture * in, int rad,
                  int threshold, int threshold2, vector<pair<int,int>> & centres);
 void findOrientation(Picture * in, int rad,
                vector<pair<int,int> > & centres,int num_lines,vector <int> & orient);
-double findDeviation(vector <int> & orient, int num_lines );
+double findDeviation(vector <int> & orient, int num_lines , vector<int> & distances);
 
 #endif // CILIARECOGNITION
 

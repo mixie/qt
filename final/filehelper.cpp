@@ -107,4 +107,24 @@ void FileHelper::createNewPatient(QString patientName,QString filename){
     fa.close();
 }
 
+void FileHelper::addPatientDataToFile(vector<int> columns, QString filename){
+    QFile fw(path+filename+"col.csv");
+    if(!(fw.open(QIODevice::Append))){
+        QMessageBox::information(0, "error", "Nepodarilo sa otvoriť súbor s údajmi pacienta");
+    }
+    QString line;
+    for(int i=0;i<columns.size();i++){
+        line.append(QString::number(columns[i]));
+        if(i<columns.size()-1){
+            line.append(",");
+        }else{
+            line.append("\n");
+        }
+    }
+    QTextStream str(&fw);
+    str <<line;
+    str.flush();
+    fw.close();
+}
+
 //void FileHelper::saveToPgm()

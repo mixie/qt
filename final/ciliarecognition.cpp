@@ -250,7 +250,7 @@ int distance(int mean,int orientation){
     return min(qAbs(mean-orientation),180-qAbs(mean-orientation));
 }
 
-double findDeviation(vector <int> & orient, int num_lines){
+double findDeviation(vector <int> & orient, int num_lines, vector<int> & distances){
     int min1=999999999;
     int min_angle=0;
     for(int i=0;i<num_lines;i++){
@@ -265,7 +265,9 @@ double findDeviation(vector <int> & orient, int num_lines){
     }
     double odchylka=0;
     for(unsigned int i=0;i<orient.size();i++){
-        odchylka+=distance(min_angle,orient[i])*distance(min_angle,orient[i]);
+        int dist=distance(min_angle,orient[i]);
+        odchylka+=dist*dist;
+        distances.push_back(dist);
     }
     odchylka=sqrt(odchylka/(orient.size()-1));
     return odchylka;

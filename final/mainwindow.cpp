@@ -173,7 +173,8 @@ void MainWindow::on_nextButton_clicked()
 
 void MainWindow::finishPic(){
     scene->getOrientations(orient);
-    double dev=pictureProcess->step4(orient,num_lines);
+    vector<int> columns;
+    double dev=pictureProcess->step4(orient,num_lines,columns);
     int num_cilia=orient.size();
     QList<PictureDeviation*> devs;
     FileHelper::getPatientDeviations(patientFile,patientName,devs);
@@ -185,9 +186,11 @@ void MainWindow::finishPic(){
     fd.setModal(true);
     if(fd.exec()==QDialog::Accepted){
         FileHelper::addPatientDeviationToFile(*newDev,patientFile);
+        PictureDeviation pd1(overallDev,countOverall);
+        FileHelper::addPatientOverallDevToFIle(pd1 ,patientFile);
+        FileHelper::addPatientDataToFile(columns,patientFile);
     }
-    PictureDeviation pd1(overallDev,countOverall);
-    FileHelper::addPatientOverallDevToFIle(pd1 ,patientFile);
+
 }
 
 

@@ -53,8 +53,21 @@ void PictureProcess::step3(vector <pair<int,int>> & centres,int num_lines,vector
     findOrientation(p1,cilia_rad,centres,num_lines,orient);
 }
 
-double PictureProcess::step4(vector<int> orient,int num_lines){
-    return findDeviation(orient,num_lines);
+double PictureProcess::step4(vector<int> orient,int num_lines,vector<int> & columns){
+    vector <int> column_sizes(90/column_size,0);
+    vector <int> distances;
+    sort(distances.begin(),distances.end());
+    double dev=findDeviation(orient,num_lines,distances);
+    for(int i=0;i<distances.size();i++){
+        column_sizes[distances[i]/column_size]++;
+        cout <<"***"<< distances[i]<< "***\n";
+    }
+    cout << "COLUMNS:\n";
+    for(int i=0;i<column_sizes.size();i++){
+        cout << column_sizes[i] << "\n";
+    }
+    columns=column_sizes;
+    return dev;
 }
 
 void PictureProcess::del(Picture * p){
@@ -63,3 +76,4 @@ void PictureProcess::del(Picture * p){
      p=0;
  }
 }
+
